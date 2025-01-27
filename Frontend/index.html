@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    
+<div id="app"> </div>
+
+<script>
+    let model = {data: []};
+    getDataAndUpdateView();
+
+    function updateView(){
+        app = document.getElementById('app')
+
+        app.innerHTML = /*HTML*/`
+        
+        <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>TempC</th>
+                <th>TempF</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${createTableRows()}
+
+        </tbody>
+    </table>
+        
+        `;
+    }
+
+    function editMode(mode, row){
+
+        if (mode){
+            model.data[row].editRowBool = true;
+        }
+         
+        else {
+            model.data[row].editRowBool = false;
+        }
+        updateView();
+    }
+
+    function createTableRows(){
+        let i = 0;
+        let html = "";
+        model.data.forEach(element => {
+            let td = `<input type="text" value="${element.summary}" placeholder="Summary"></td><td> <button onClick="editMode(false, ${i}); putInDatabase()">Save</button></td>`;
+            let td2 = "";
+                if (!element.editRowBool){
+                     td = `${element.summary}`;
+                     td2 = `<td><button onClick="editMode(true, ${i})">Edit</button></td>`;
+                }
+                i++
+                   
+            html += /*HTML*/`
+            <tr>
+    <td>${element.date}</td>
+    <td>${element.temperatureC}</td>
+    <td>${element.temperatureF}</td>
+    <td>${td}</td>${td2}
+</tr>
+            
+            `
+            
+        });
+        return html;
+    }
+
+    function putInDatabase(){
+        
+    }
+
+
+    async function getDataAndUpdateView() {
+        await axios.get('https://localhost:7175/WeatherForecast')
+                .then(response => {
+                    console.log('Data received:', response.data);
+                    model.data = response.data
+                })
+                .catch(error => {
+                    console.error('There was an error!', error);
+                    alert('Error fetching data');
+                });
+
+                updateView();
+    }
+
+    
+
+
+</script>
+
+
+
+</body>
+</html>
