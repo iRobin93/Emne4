@@ -24,16 +24,16 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend.WeatherForecast", b =>
                 {
-                    b.Property<DateOnly>("Date")
+                    b.Property<DateOnly>("date")
                         .HasColumnType("date");
 
-                    b.Property<string>("Summary")
+                    b.Property<string>("summary")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TemperatureC")
+                    b.Property<int>("temperatureC")
                         .HasColumnType("int");
 
-                    b.HasKey("Date");
+                    b.HasKey("date");
 
                     b.ToTable("forecast");
                 });

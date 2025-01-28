@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250127095803_v2")]
-    partial class v2
+    [Migration("20250128172356_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,16 +27,16 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend.WeatherForecast", b =>
                 {
-                    b.Property<DateOnly>("Date")
+                    b.Property<DateOnly>("date")
                         .HasColumnType("date");
 
-                    b.Property<string>("Summary")
+                    b.Property<string>("summary")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TemperatureC")
+                    b.Property<int>("temperatureC")
                         .HasColumnType("int");
 
-                    b.HasKey("Date");
+                    b.HasKey("date");
 
                     b.ToTable("forecast");
                 });

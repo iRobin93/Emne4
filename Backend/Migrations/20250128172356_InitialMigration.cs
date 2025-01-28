@@ -15,15 +15,13 @@ namespace Backend.Migrations
                 name: "forecast",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateOnly>(type: "date", nullable: false),
-                    TemperatureC = table.Column<int>(type: "int", nullable: false),
-                    Summary = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    date = table.Column<DateOnly>(type: "date", nullable: false),
+                    temperatureC = table.Column<int>(type: "int", nullable: false),
+                    summary = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_forecast", x => x.Id);
+                    table.PrimaryKey("PK_forecast", x => x.date);
                 });
         }
 

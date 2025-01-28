@@ -46,13 +46,13 @@ namespace Backend.Controllers
         {
 
 
-            var existingProduct = await appDbContext.forecast.FindAsync(forecast.Date);
+            var existingProduct = await appDbContext.forecast.FindAsync(forecast.date);
             if (existingProduct == null)
             {
                 return NotFound();
             }
 
-            existingProduct.Summary = forecast.Summary;
+            existingProduct.summary = forecast.summary;
             try
             {
                 // Save changes to the database
@@ -61,7 +61,7 @@ namespace Backend.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 // Handle concurrency issues if necessary
-                if (!ProductExists(forecast.Date))
+                if (!ProductExists(forecast.date))
                 {
                     return NotFound();
                 }
@@ -72,7 +72,7 @@ namespace Backend.Controllers
 
         private bool ProductExists(DateOnly date)
         {
-            return appDbContext.forecast.Any(e => e.Date == date);
+            return appDbContext.forecast.Any(e => e.date == date);
         }
     }
 }

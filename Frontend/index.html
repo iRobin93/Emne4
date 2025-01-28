@@ -83,7 +83,7 @@
         }
 
         async function putInDatabase(index) {
-            axios.put('https://localhost:7175/WeatherForecast', model.data[index])
+            axios.put('http://localhost:7175/WeatherForecast', model.data[index])
                 .then(response => {
                     console.log("Success:", response.data); // Handle the response data
                 })
@@ -94,7 +94,7 @@
 
 
         async function getDataAndUpdateView() {
-            await axios.get('https://localhost:7175/WeatherForecast')
+            await axios.get('http://localhost:7175/WeatherForecast')
                 .then(response => {
                     console.log('Data received:', response.data);
                     model.data = response.data
