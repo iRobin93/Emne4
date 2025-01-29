@@ -4,8 +4,8 @@ console.log('Hello, Node.js!');
 // Import Express using ES module syntax
 import express from 'express';
 import cors from 'cors';
-//import sql from 'mssql/msnodesqlv8.js';
-import sql from 'mssql';
+import sql from 'mssql/msnodesqlv8.js';
+//import sql from 'mssql';
 import https from 'https';
 import fs from 'fs';
 import { format } from 'date-fns'
@@ -17,30 +17,35 @@ class WeatherForecast {
 
     this.temperatureC = temperatureC;
     this.summary = summary;
-    this.temperatureF = Math.round(this.temperatureC / 0.5556);
+    this.temperatureF = Math.round(32 + this.temperatureC / 0.5556);
   }
 }
 
 
 // Define your database connection configuration
 const config = {
-  user: 'test',
-  password: 'test',
-  server: '127.0.0.1',          // Replace with your database server address (e.g., localhost)
+
+  //Bruk dette for vanlig mssql import
+  // user: 'test',
+  // password: 'test',
+  // server: '127.0.0.1',          // Replace with your database server address (e.g., localhost)
+  // options: {
+  //   encrypt: false, // Enable encryption (useful for Azure SQL)
+  //   trustServerCertificate: true, // Use this if connecting to a local SQL Server or a server without a valid SSL certificate
+  //   trustedConnection: true,  // Use Windows Authentication
+  // },
+  //
+
   //server: '(localdb)\\local)',          // Replace with your database server address (e.g., localhost)
   //server: '\\\\.\\pipe\\LOCALDB#FA144DC9\\tsql\\query',
   //server: '(localdb)\\MSSQLLocalDB',
+  connectionString: 'Driver={ODBC Driver 17 for SQL Server};server=(localdb)\\local;Initial Catalog=Emne4Database;Trusted_Connection={yes};',  
   //database: 'Emne4Database', // Replace with your database name
-  database: 'Emne4Database', // Replace with your database name
   //driver: 'ODBC Driver 17 for SQL Server',
   //driver: 'odbc',
-  dialect: "mssql",
+  //dialect: "mssql",
   //connectionstring: 'DSN=test',
-  options: {
-    encrypt: false, // Enable encryption (useful for Azure SQL)
-    trustServerCertificate: true, // Use this if connecting to a local SQL Server or a server without a valid SSL certificate
-    trustedConnection: true,  // Use Windows Authentication
-  },
+
   //  authentication: {
   //    type: 'ntlm',  // Windows authentication
   //    options: {
@@ -60,10 +65,11 @@ async function queryDatabase() {
   try {
     // Connect to the database
     await sql.connect(config);
+    await sql.query(`USE Emne4Database`);
     console.log('Connected to LocalDB Database!');
 
     // Example query: Select all rows from a table
-    const result = await sql.query`SELECT * FROM forecast`; // Replace 'your_table_name' with the actual table name
+    const result = await sql.query(`SELECT * FROM forecast`); // Replace 'your_table_name' with the actual table name
     console.log(result.recordset); // Output the result of the query
   } catch (err) {
     console.error('Error connecting to LocalDB database:', err);
@@ -84,6 +90,7 @@ app.get('/WeatherForecast', async (req, res) => {
   // res.send('Hello, World!');
   try {
     await sql.connect(config)
+    await sql.query(`USE Emne4Database`);
     const result = await sql.query('SELECT * FROM forecast');
     const forecasts = result.recordset.map(f => new WeatherForecast(f.date, f.temperatureC, f.summary));
     res.json(forecasts);
@@ -100,6 +107,7 @@ app.get('/WeatherForecast', async (req, res) => {
 app.put('/WeatherForecast', async (req, res) => {
   try {
     await sql.connect(config)
+    await sql.query(`USE Emne4Database`);
     const forecast = req.body;
     const result = await sql.query`UPDATE forecast SET summary = ${forecast.summary}, temperatureC = ${forecast.temperatureC} WHERE date = ${forecast.date}`;
     console.log('Update successful', result);

@@ -9,7 +9,7 @@ namespace Backend
 
         public int temperatureC { get; set; }
 
-        public int temperatureF => 32 + (int)(temperatureC / 0.5556);
+        public int temperatureF => (int)Math.Round(32 + (temperatureC / 0.5556));
 
         public string? summary { get; set; }
     }
