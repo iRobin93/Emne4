@@ -36,10 +36,12 @@ const config = {
   // },
   //
 
-  //server: '(localdb)\\local)',          // Replace with your database server address (e.g., localhost)
-  //server: '\\\\.\\pipe\\LOCALDB#FA144DC9\\tsql\\query',
-  //server: '(localdb)\\MSSQLLocalDB',
-  connectionString: 'Driver={ODBC Driver 17 for SQL Server};server=(localdb)\\local;Initial Catalog=Emne4Database;Trusted_Connection={yes};',  
+
+  //Bruk denne for msnodesqlv8:
+  connectionString: 'Driver={ODBC Driver 17 for SQL Server};server=(localdb)\\local;Database=Emne4Database;Trusted_Connection={yes};',  
+
+
+  //Test greier
   //database: 'Emne4Database', // Replace with your database name
   //driver: 'ODBC Driver 17 for SQL Server',
   //driver: 'odbc',
@@ -65,7 +67,6 @@ async function queryDatabase() {
   try {
     // Connect to the database
     await sql.connect(config);
-    await sql.query(`USE Emne4Database`);
     console.log('Connected to LocalDB Database!');
 
     // Example query: Select all rows from a table
@@ -90,7 +91,6 @@ app.get('/WeatherForecast', async (req, res) => {
   // res.send('Hello, World!');
   try {
     await sql.connect(config)
-    await sql.query(`USE Emne4Database`);
     const result = await sql.query('SELECT * FROM forecast');
     const forecasts = result.recordset.map(f => new WeatherForecast(f.date, f.temperatureC, f.summary));
     res.json(forecasts);
@@ -107,7 +107,6 @@ app.get('/WeatherForecast', async (req, res) => {
 app.put('/WeatherForecast', async (req, res) => {
   try {
     await sql.connect(config)
-    await sql.query(`USE Emne4Database`);
     const forecast = req.body;
     const result = await sql.query`UPDATE forecast SET summary = ${forecast.summary}, temperatureC = ${forecast.temperatureC} WHERE date = ${forecast.date}`;
     console.log('Update successful', result);
