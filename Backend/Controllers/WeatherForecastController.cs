@@ -23,7 +23,7 @@ namespace Backend.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
-            HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+            //HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
             return appDbContext.forecast.ToList();
 
         }
