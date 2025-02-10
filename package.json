@@ -3,13 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "predeploy": "npm run build",
     "deploy": "cd musicapp && npm run build && npx gh-pages -d dist -b gh-pages"
   },
-  "homepage": "https://irobin93.github.io/Emne4/",
+  "homepage": "https://irobin93.github.io/Emne4/musicapp",
   "dependencies": {
     "core-js": "^3.8.3",
     "vue": "^3.2.13"
