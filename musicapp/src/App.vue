@@ -1,6 +1,6 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <SongRecommendation :songs="myList" @add-song="addSongToList" />
+  <SongRecommendation :songs="myList" @add-song="addSongToList" @delete-Song="deleteSong" />
 
 </template>
 
@@ -16,11 +16,13 @@ export default {
           Title: "Song 1",
           Artist: "Me",
           Favourite: undefined,
+          Recomend: "Recomend",
         },
         {
           Title: "Song 2",
           Artist: "You",
           Favourite: undefined,
+          Recomend: "Recomend",
         }
       ]
     };
@@ -28,6 +30,9 @@ export default {
   methods: {
     addSongToList(newSong) {
       this.myList.push(newSong);  // Add the new song to the list
+    },
+    deleteSong(index){
+      this.myList.splice(index, 1)
     }
   },
   components: {

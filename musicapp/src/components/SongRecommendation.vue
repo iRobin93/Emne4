@@ -3,8 +3,9 @@
         <ul>
             <!-- Loop through the list and display each item -->
             <li v-for="(song, index) in songs" :key="index">
-                {{ song.Title }} - {{ song.Artist }} {{ song.Favourite }}
-                <button @click="markAsRecommended(song)">Recomend</button>
+                {{ song.Title }} - {{ song.Artist }} {{ song.Favourite ? "This is recomended" : "This is not recomended" }}
+                <button @click="markAsRecommended(song)">{{ song.Recomend }}</button>
+                <button @click="deleteSongClicked(index)">Delete</button>
             </li>
             <input v-model="newSong" placeholder="Add a new song">
             <input v-model="newArtist" placeholder="Add a new artist">
@@ -32,7 +33,11 @@ export default {
     },
     methods: {
         markAsRecommended(song) {
-            song.Favourite = true; // Mark song as recommended
+            song.Favourite = !song.Favourite;
+            song.Recomend = song.Favourite ? "Unrecomend" : "Recomend";
+        },
+        deleteSongClicked(index){
+            this.$emit('delete-Song', index)
         },
         addSong() {
             if (this.newSong && this.newArtist) {
@@ -41,6 +46,7 @@ export default {
                     Title: this.newSong,
                     Artist: this.newArtist,
                     Favourite: undefined,
+                    Recomend: "Recomend",
                 });
 
                 // Clear the input fields after adding
