@@ -1,7 +1,9 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <SongRecommendation :songs="myList" @add-song="addSongToList" @delete-Song="deleteSong" />
-
+  <div class="min-h-screen bg-gray-100 flex items-center justify-center">
+    <h1 class="text-4xl font-bold text-blue-500">Hello, Tailwind CSS in Vue 3!</h1>
+  </div>
 </template>
 
 <script>
