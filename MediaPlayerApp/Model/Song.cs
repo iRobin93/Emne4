@@ -8,9 +8,9 @@ namespace MediaPlayerApp.Model
 {
     internal class Song
     {
-        public int Id { get; set; }
-        public string Artist { get; set; }
-        public string Title { get; set; }
+        private int Id { get; set; }
+        public string Artist { get; private set; }
+        public string Title { get; private set; }
 
         public Song(int id, string title, string artist)
         {

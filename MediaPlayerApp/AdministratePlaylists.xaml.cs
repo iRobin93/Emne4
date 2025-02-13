@@ -11,19 +11,30 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using MediaPlayerApp.Data;
 
 namespace MediaPlayerApp
 {
     /// <summary>
     /// Interaction logic for EditPlaylist.xaml
     /// </summary>
-    public partial class EditPlaylist : Window
+    public partial class AdministratePlaylists : Window
     {
-        public EditPlaylist()
+        public AdministratePlaylists()
         {
             InitializeComponent();
-            myListBox.ItemsSource = Playlists.playlists[0].Songs;
+
+
+        }
+
+        private void Button_ClickEdit(object sender, RoutedEventArgs e)
+        {
+            EditPlaylist subWindow = new EditPlaylist();
+            subWindow.Show();  // Opens the sub-window
+        }
+
+        private void Button_ClickDelete(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

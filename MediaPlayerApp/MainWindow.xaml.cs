@@ -31,7 +31,7 @@ namespace MediaPlayerApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            EditPlaylist subWindow = new EditPlaylist();
+            AdministratePlaylists subWindow = new AdministratePlaylists();
             subWindow.Show();  // Opens the sub-window
         }
     }
