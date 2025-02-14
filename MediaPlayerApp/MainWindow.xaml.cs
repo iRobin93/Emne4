@@ -31,8 +31,8 @@ namespace MediaPlayerApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            AdministratePlaylists subWindow = new AdministratePlaylists();
-            subWindow.Show();  // Opens the sub-window
+            AdministrateButton.Visibility = Visibility.Hidden;
+            MainFrame.Navigate(new AdministratePlaylists2(MainFrame));
         }
     }
 }

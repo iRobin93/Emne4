@@ -15,7 +15,8 @@
                     <WrapPanel>
                         <!-- Display Playlist Name -->
                    
-                        <TextBlock Text="{Binding Title}" FontWeight="Bold" Width="66" />
+                        <TextBlock Text="{Binding title}" FontWeight="Bold" Width="66" />
+                        <Button Click="Button_Click">Endre</Button>
                     </WrapPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

@@ -19,22 +19,25 @@ namespace MediaPlayerApp
     /// </summary>
     public partial class AdministratePlaylists : Window
     {
-        public AdministratePlaylists()
+        private Window _previousWindow;
+        public AdministratePlaylists(Window window)
         {
             InitializeComponent();
-
-
+            _previousWindow = window;
         }
 
         private void Button_ClickEdit(object sender, RoutedEventArgs e)
         {
+          
             EditPlaylist subWindow = new EditPlaylist();
             subWindow.Show();  // Opens the sub-window
+            
         }
 
         private void Button_ClickDelete(object sender, RoutedEventArgs e)
         {
-
+            _previousWindow.Show();
+            this.Close();
         }
     }
 }

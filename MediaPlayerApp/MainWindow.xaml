@@ -8,11 +8,12 @@
         Title="MainWindow" Height="450" Width="800">
 
     <Grid>
-        <Button Grid.Column="1" Margin="552,10,10,391" Click="Button_Click">Administrer</Button>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="119*"/>
-            <ColumnDefinition Width="681*"/>
-        </Grid.ColumnDefinitions>
-
+        <!-- Frame where pages will be loaded -->
+        <Frame Name="MainFrame" Grid.ColumnSpan="2" JournalOwnership="OwnsJournal"/>
+        <Button Name="AdministrateButton" Grid.Column="1" Margin="552,26,10,349" Click="Button_Click">Administrer</Button>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="119*"/>
+                <ColumnDefinition Width="681*"/>
+            </Grid.ColumnDefinitions>
     </Grid>
 </Window>
