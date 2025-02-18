@@ -10,26 +10,31 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MediaPlayerApp.Data;
+using MediaPlayerApp.Model;
 
 namespace MediaPlayerApp
 {
     /// <summary>
-    /// Interaction logic for EditPlaylist.xaml
+    /// Interaction logic for EditPlaylist2.xaml
     /// </summary>
-    public partial class EditPlaylist : Window
+    public partial class EditPlaylist2 : Page
     {
-        public EditPlaylist()
+        private Frame _mainFrame;
+        public EditPlaylist2(Frame mainframe)
         {
             InitializeComponent();
+            _mainFrame = mainframe;
             myListBox.ItemsSource = Playlists.playlists[0].Songs;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var song = (MediaPlayerApp.Model.Song)((Button)sender).DataContext;
-            song.title += "Hei";
+            
+            Player.PlaySong(song);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace MediaPlayerApp
 
         private void Button_ClickEdit(object sender, RoutedEventArgs e)
         {
-
+            _mainFrame.Navigate(new EditPlaylist2(_mainFrame));
         }
 
         private void Button_ClickDelete(object sender, RoutedEventArgs e)
