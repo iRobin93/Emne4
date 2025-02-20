@@ -12,35 +12,31 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MediaPlayerApp.Data;
+using MediaPlayerApp.Model;
 
-namespace MediaPlayerApp
+namespace MediaPlayerApp.Pages
 {
     /// <summary>
-    /// Interaction logic for AdministratePlaylists2.xaml
+    /// Interaction logic for CreateEditPlaylistPage.xaml
     /// </summary>
-    public partial class AdministratePlaylists2 : Page
+    public partial class CreateEditPlaylistPage : Page
     {
         private Frame _mainFrame;
-        public AdministratePlaylists2(Frame mainframe)
+        public CreateEditPlaylistPage(Frame mainframe)
         {
             InitializeComponent();
             _mainFrame = mainframe;
         }
 
-        private void Button_ClickEdit(object sender, RoutedEventArgs e)
-        {
-            _mainFrame.Navigate(new EditPlaylist2(_mainFrame));
-        }
-
-        private void Button_ClickDelete(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
+        // Event handler for the button click
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
-            _mainFrame.Content = null;
+            // Get the text entered in the input field
+            string input = inputTextBox.Text;
+            Playlist playlist = new Playlist(input);
+            Playlists.AddPlaylist(playlist);
+
         }
     }
 }

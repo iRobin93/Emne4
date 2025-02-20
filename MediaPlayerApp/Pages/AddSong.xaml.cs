@@ -12,29 +12,31 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MediaPlayerApp.Data;
 using MediaPlayerApp.Model;
 
-namespace MediaPlayerApp
+namespace MediaPlayerApp.Pages
 {
     /// <summary>
-    /// Interaction logic for EditPlaylist2.xaml
+    /// Interaction logic for AddSong.xaml
     /// </summary>
-    public partial class EditPlaylist2 : Page
+    public partial class AddSong : Page
     {
         private Frame _mainFrame;
-        public EditPlaylist2(Frame mainframe)
+        public string FilePath;
+        public AddSong(Frame mainframe, string filepath)
         {
             InitializeComponent();
             _mainFrame = mainframe;
-            myListBox.ItemsSource = Playlists.playlists[0].Songs;
+            FilePath = filepath;
+            fileNameTextBlock.Text = FilePath;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SaveSong(object sender, RoutedEventArgs e)
         {
-            var song = (MediaPlayerApp.Model.Song)((Button)sender).DataContext;
             
-            Player.PlaySong(song);
+
+
+            _mainFrame.GoBack();
         }
     }
 }

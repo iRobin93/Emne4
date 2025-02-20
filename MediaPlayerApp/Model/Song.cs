@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 
 namespace MediaPlayerApp.Model
 {
-    internal class Song : INotifyPropertyChanged
+    public class Song : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private static int _nextSongId = 1;
         private int Id { get; set; }
         public string Artist { get; private set; }
         private string Title { get; set; }
+        private string _fileName;
         public string title
         {
             get => Title;
@@ -26,12 +29,14 @@ namespace MediaPlayerApp.Model
             }
         }
 
-        public Song(int id, string title, string artist)
+        public Song(string title, string artist)
         {
-            Id = id;
+            Id = _nextSongId++;
             Artist = artist;
             Title = title;
         }
+
+
 
         // This method is called to raise the PropertyChanged event
         protected virtual void OnPropertyChanged(string propertyName)

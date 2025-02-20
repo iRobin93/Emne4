@@ -1,0 +1,22 @@
+﻿<Page x:Class="MediaPlayerApp.Pages.AddSong"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MediaPlayerApp"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddSong">
+
+    <Grid>
+        <StackPanel>
+            <TextBlock>Ny Sang</TextBlock>
+            <TextBlock x:Name="fileNameTextBlock"></TextBlock>
+            <TextBlock>Artist Navn</TextBlock>
+            <TextBox x:Name="ArtistName"></TextBox>
+            <TextBlock>Sang Navn</TextBlock>
+            <TextBox x:Name="SongName"></TextBox>
+            <Button Click="SaveSong">Lagre</Button>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -8,12 +8,28 @@
         Title="MainWindow" Height="450" Width="800">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />  <!-- Header -->
+            <RowDefinition Height="*" />  <!-- SubPage Container -->
+            <RowDefinition Height="Auto" />  <!-- Footer -->
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0"
+        Background = "LightBlue"
+        Padding="10">
+            <StackPanel VerticalAlignment="Center" >
+                <TextBlock>This is a header!</TextBlock>
+                <Button Content="Administrer" HorizontalAlignment="Right" x:Name="AdminButton" Click="AdminButton_Click" />
+            </StackPanel>
+        </Border>
+        
         <!-- Frame where pages will be loaded -->
-        <Frame Name="MainFrame" Grid.ColumnSpan="2" JournalOwnership="OwnsJournal"/>
-        <Button Name="AdministrateButton" Grid.Column="1" Margin="552,26,10,349" Click="Button_Click">Administrer</Button>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="119*"/>
-                <ColumnDefinition Width="681*"/>
-            </Grid.ColumnDefinitions>
+
+        <Frame Name="MainFrame" JournalOwnership="OwnsJournal" Grid.Row="1" NavigationUIVisibility="Hidden"/>
+
+        <Border Grid.Row="2"
+        Background = "LightBlue"
+        Padding="10">
+            <TextBlock FontSize="20">This is a footer!</TextBlock>
+        </Border>
     </Grid>
 </Window>

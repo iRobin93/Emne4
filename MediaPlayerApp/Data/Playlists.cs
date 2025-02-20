@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,17 +10,22 @@ namespace MediaPlayerApp.Data
 {
     static internal class Playlists
     {
-        public static List<Playlist> playlists = new List<Playlist>();
+        public static ObservableCollection<Playlist> playlists = new ObservableCollection<Playlist>();
         static Playlists()
         {
-            var myPlayList2 = new Playlist(2, "MyList2");
-            var myPlayList = new Playlist(1, "MyPlayList");
-            var mySong = new Song(1, "MySong", "Me");
+            var myPlayList2 = new Playlist( "MyList2");
+            var myPlayList = new Playlist( "MyPlayList");
+            var mySong = new Song("MySong", "Me");
             myPlayList.AddSong(mySong);
-            mySong = new Song(2, "YourSong", "You");
+            mySong = new Song("YourSong", "You");
             myPlayList.AddSong(mySong);
+            myPlayList2.AddSong(mySong);
             playlists.Add(myPlayList);
             playlists.Add(myPlayList2);
+        }
+        public static void AddPlaylist(Playlist playlist)
+        {
+            playlists.Add(playlist);
         }
     }
 
