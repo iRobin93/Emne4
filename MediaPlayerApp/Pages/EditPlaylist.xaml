@@ -15,16 +15,16 @@
             <ListBox x:Name="myListBox">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <WrapPanel>
+                        <StackPanel Orientation="Horizontal">
                         <!-- Display Playlist Name -->
 
                         <TextBlock Text="{Binding title}" FontWeight="Bold" Width="66" />
                         <Button Click="Button_Click">Play</Button>
-                    </WrapPanel>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-            <Button Click="ChooseFileButton_Click">Choose file</Button>
+            <Button Click="ChooseFileButton_Click">Velg fil</Button>
         </StackPanel>
     </Grid>
 </Page>

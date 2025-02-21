@@ -15,7 +15,7 @@ namespace MediaPlayerApp.Model
         private int Id { get; set; }
         public string Artist { get; private set; }
         private string Title { get; set; }
-        private string _fileName;
+        public string FilePath { get; private set; }
         public string title
         {
             get => Title;
@@ -29,11 +29,12 @@ namespace MediaPlayerApp.Model
             }
         }
 
-        public Song(string title, string artist)
+        public Song(string title, string artist, string filepath)
         {
             Id = _nextSongId++;
             Artist = artist;
             Title = title;
+            FilePath = filepath;
         }
 
 

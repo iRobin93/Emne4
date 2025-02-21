@@ -26,10 +26,34 @@
 
         <Frame Name="MainFrame" JournalOwnership="OwnsJournal" Grid.Row="1" NavigationUIVisibility="Hidden"/>
 
-        <Border Grid.Row="2"
-        Background = "LightBlue"
-        Padding="10">
-            <TextBlock FontSize="20">This is a footer!</TextBlock>
+        <Border Grid.Row="2" Background="LightBlue" Padding="10">
+            <!-- First StackPanel -->
+            <StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <!-- First Border (with fixed width and TextBlock) -->
+                <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5" Width="75" Height="22">
+                    <TextBlock Text="Spilles nå:" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                </Border>
+
+                <!-- Second Border with dynamic size based on the content -->
+                <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5" Width="75" Height="22">
+                    <TextBlock x:Name="playingNowSongName" Text="Test" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                </Border>
+            </StackPanel>
+
+            <!-- Second StackPanel -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <!-- First Border (with fixed width and TextBlock) -->
+                <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5" Width="75" Height="22">
+                    <TextBlock Text="Artist:" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                </Border>
+
+                <!-- Second Border with dynamic size based on the content -->
+                    <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5"  Width="75" Height="22">
+                    <TextBlock x:Name="playingNowArtist" Text="Test" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                </Border>
+            </StackPanel>
+            </StackPanel>
         </Border>
     </Grid>
 </Window>

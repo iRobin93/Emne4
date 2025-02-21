@@ -25,12 +25,14 @@ namespace MediaPlayerApp
     public partial class EditPlaylist : Page
     {
         private Frame _mainFrame;
+        private Playlist _selectedPlaylist;
         public EditPlaylist(Frame mainframe, Playlist selectedPlaylist)
         {
             InitializeComponent();
             _mainFrame = mainframe;
             myListBox.ItemsSource = selectedPlaylist.Songs;
             playlistName.Text = selectedPlaylist.Name;
+            _selectedPlaylist = selectedPlaylist;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -52,7 +54,7 @@ namespace MediaPlayerApp
                 // Get the selected file's path and display it in the TextBlock
                 string filePath = openFileDialog.FileName;
                 //filePathTextBlock.Text = "Selected File: " + filePath;
-                _mainFrame.Navigate(new AddSong(_mainFrame, filePath));
+                _mainFrame.Navigate(new AddSong(_mainFrame, filePath, _selectedPlaylist));
             }
         }
     }
