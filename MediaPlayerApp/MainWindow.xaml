@@ -9,9 +9,12 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />  <!-- Header -->
-            <RowDefinition Height="*" />  <!-- SubPage Container -->
-            <RowDefinition Height="Auto" />  <!-- Footer -->
+            <RowDefinition Height="Auto" />
+            <!-- Header -->
+            <RowDefinition Height="*" />
+            <!-- SubPage Container -->
+            <RowDefinition Height="Auto" />
+            <!-- Footer -->
         </Grid.RowDefinitions>
         <Border Grid.Row="0"
         Background = "LightBlue"
@@ -21,7 +24,7 @@
                 <Button Content="Administrer" HorizontalAlignment="Right" x:Name="AdminButton" Click="AdminButton_Click" />
             </StackPanel>
         </Border>
-        
+
         <!-- Frame where pages will be loaded -->
 
         <Frame Name="MainFrame" JournalOwnership="OwnsJournal" Grid.Row="1" NavigationUIVisibility="Hidden"/>
@@ -29,30 +32,42 @@
         <Border Grid.Row="2" Background="LightBlue" Padding="10">
             <!-- First StackPanel -->
             <StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <!-- First Border (with fixed width and TextBlock) -->
-                <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5" Width="75" Height="22">
-                    <TextBlock Text="Spilles nå:" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                </Border>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <!-- First Border (with fixed width and TextBlock) -->
+                    <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5" Width="75" Height="22">
+                        <TextBlock Text="Spilles nå:" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                    </Border>
 
-                <!-- Second Border with dynamic size based on the content -->
-                <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5" Width="75" Height="22">
-                    <TextBlock x:Name="playingNowSongName" Text="Test" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                </Border>
-            </StackPanel>
+                    <!-- Second Border with dynamic size based on the content -->
+                    <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5" Width="75" Height="22">
+                        <TextBlock x:Name="playingNowSongName" Text="Test" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5" Width="75" Height="22">
+                        <TextBlock Padding="28,0,0,0" Text="⏵" x:Name="pausePlayButton" MouseLeftButtonDown="pausePlayButton_MouseLeftButtonDown"></TextBlock>
+                    </Border>
+                </StackPanel>
 
-            <!-- Second StackPanel -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <!-- First Border (with fixed width and TextBlock) -->
-                <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5" Width="75" Height="22">
-                    <TextBlock Text="Artist:" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                </Border>
+                <!-- Second StackPanel -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <!-- First Border (with fixed width and TextBlock) -->
+                    <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5" Width="75" Height="22">
+                        <TextBlock Text="Artist:" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                    </Border>
 
-                <!-- Second Border with dynamic size based on the content -->
+                    <!-- Second Border with dynamic size based on the content -->
                     <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5"  Width="75" Height="22">
-                    <TextBlock x:Name="playingNowArtist" Text="Test" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                </Border>
-            </StackPanel>
+                        <TextBlock x:Name="playingNowArtist" Text="Test" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                    </Border>
+
+                    <!-- Footer for song progress -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="10" Height="20">
+                        <TextBlock x:Name="currentTimeText" VerticalAlignment="Center" Margin="5" Width="60"/>
+                        <Slider x:Name="progressSlider" VerticalAlignment="Center" Height="20" Minimum="0" Maximum="100" Value="0" ValueChanged="ProgressSlider_ValueChanged" Width="370"/>
+                        <TextBlock x:Name="totalTimeText" VerticalAlignment="Center" Margin="5" Width="60"/>
+                    </StackPanel>
+
+                </StackPanel>
+
             </StackPanel>
         </Border>
     </Grid>

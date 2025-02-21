@@ -9,6 +9,6 @@
       Title="PlayerPage">
 
     <Grid>
-        <TextBlock>Hei dette er player.</TextBlock>
+        <Image x:Name="songImage"></Image>
     </Grid>
 </Page>

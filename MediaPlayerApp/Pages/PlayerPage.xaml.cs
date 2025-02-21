@@ -24,5 +24,11 @@ namespace MediaPlayerApp
         {
             InitializeComponent();
         }
+
+
+        public void UpdateImageSource(BitmapImage image)
+        {
+            songImage.Source = image;
+        }
     }
 }

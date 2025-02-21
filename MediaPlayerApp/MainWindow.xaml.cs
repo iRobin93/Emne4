@@ -1,85 +1,110 @@
-﻿using System.Text;
+﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-/*
- * Opprette nødvendige klasser - 
- * 
- * 
- * 
- */
-
+using MediaPlayerApp.Model;
+using TagLib.Tiff.Pef;
 
 namespace MediaPlayerApp
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-
+        private PlayerPage _playerpage;
         public MainWindow()
         {
             InitializeComponent();
-            //MainFrame.Navigate(new Uri("PlayerPage.xaml", UriKind.Relative));
-            MainFrame.Navigate(new PlayerPage());
+            progressSlider.ValueChanged += ProgressSlider_ValueChanged;
+            MainFrame.Navigate(_playerpage = new PlayerPage());
+ 
+        }
+
+        public void SetSongInfo(TagLib.File tagfile)
+        {
+            playingNowSongName.Text = tagfile.Tag.Title;
+            playingNowArtist.Text = tagfile.Tag.FirstPerformer;
+            totalTimeText.Text = tagfile.Properties.Duration.ToString(@"mm\:ss");
+            _playerpage.UpdateImageSource(GetAlbumArt(tagfile));
+            
+        }
+
+        // Method to get album art from the file
+        private BitmapImage GetAlbumArt(TagLib.File tagFile)
+        {
+            
+            if (tagFile.Tag.Pictures.Length > 0)
+            {
+                var picture = tagFile.Tag.Pictures[0]; // Get the first image (album art)
+                byte[] byteArray = picture.Data.Data;
+
+                // Convert byte[] to BitmapImage
+                var image = new BitmapImage();
+                using (var stream = new MemoryStream(byteArray))
+                {
+                    image.BeginInit();
+                    image.StreamSource = stream;
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.EndInit();
+                }
+
+                return image;
+            }
+
+            return null; // Return null if no album art is found
         }
 
         private void AdminButton_Click(object sender, RoutedEventArgs e)
         {
-            if(MainFrame.Content is PlayerPage)
+            if (MainFrame.Content is PlayerPage)
             {
                 AdminButton.Content = "Tilbake";
                 MainFrame.Navigate(new AdministratePlaylists(MainFrame));
-                //MainFrame.Navigate(new Uri("AdministratePlaylists2.xaml", UriKind.Relative));
             }
-            else if (MainFrame.Content is AdministratePlaylists) 
+            else if (MainFrame.Content is AdministratePlaylists)
             {
                 AdminButton.Content = "Administrer";
                 MainFrame.GoBack();
-                
             }
             else
             {
                 MainFrame.GoBack();
             }
-            
+        }
 
-            
-            
-            
+        private void pausePlayButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Player.IsPlaying())
+                Player.PauseSong();
+            else
+                Player.ResumeSong();
+        }
+
+        public void ChangeToPlay()
+        {
+            pausePlayButton.Text = "⏵"; // Play symbol
+        }
+
+        public void ChangeToPause()
+        {
+            pausePlayButton.Text = "⏸"; // Pause symbol
+        }
+
+        // Update the progress slider with the current song position
+        public void UpdateProgressSlider(double currentPosition)
+        {
+            progressSlider.Value = currentPosition;
+            currentTimeText.Text = TimeSpan.FromSeconds(currentPosition).ToString(@"mm\:ss");
+        }
+
+        // Event handler for the progress slider (when the user seeks to a new position)
+        private void ProgressSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (Math.Abs(e.NewValue - e.OldValue) > 0.1) // Avoid calling frequently if no real change
+            {
+                Player.SeekSong(e.NewValue);
+            }
         }
     }
 }
-
-/*
- * 
- * 
- * 
- * private void AdminButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (MainFrame.Content is SubPage2)
-            {
-                MainFrame.GoBack();
-                AdminButton.Content = "Administrer";
-            }
-            else
-            {
-                MainFrame.Navigate(new Uri("SubPage2.xaml", UriKind.Relative));
-                AdminButton.Content = "Tilbake";
-            }
-        }
- * 
- * 
- * 
- * 
- * 
- * 
- */
