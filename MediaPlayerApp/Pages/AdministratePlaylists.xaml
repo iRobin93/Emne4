@@ -21,6 +21,7 @@
 
                         <Button Content="Endre" Click="Button_ClickEdit"/>
                         <Button Content="Slett" Click="Button_ClickDelete"/>
+                        <Button Content="Spill spilleliste" Click="Button_ClickPlayPlaylist"/>
                     </WrapPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

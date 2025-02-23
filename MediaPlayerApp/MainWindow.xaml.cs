@@ -18,7 +18,6 @@ namespace MediaPlayerApp
             InitializeComponent();
             progressSlider.ValueChanged += ProgressSlider_ValueChanged;
             MainFrame.Navigate(_playerpage = new PlayerPage());
- 
         }
 
         public void SetSongInfo(TagLib.File tagfile)
@@ -60,10 +59,12 @@ namespace MediaPlayerApp
             if (MainFrame.Content is PlayerPage)
             {
                 AdminButton.Content = "Tilbake";
+                headerText.Text = "Administrasjon";
                 MainFrame.Navigate(new AdministratePlaylists(MainFrame));
             }
             else if (MainFrame.Content is AdministratePlaylists)
             {
+                headerText.Text = "Spiller";
                 AdminButton.Content = "Administrer";
                 MainFrame.GoBack();
             }
@@ -105,6 +106,35 @@ namespace MediaPlayerApp
             {
                 Player.SeekSong(e.NewValue);
             }
+        }
+
+        private void previousSong_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var time = TimeSpan.FromSeconds(progressSlider.Value);
+            if (time.TotalSeconds < 2)
+                Player.PlayPreviousSong();
+            else Player.RestartSong();
+
+        }
+
+        private void nextSong_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Player.PlayNextSong();
+        }
+
+        private void Mute_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Player.MuteOrUnMute();
+        }
+
+        public void SetMuteIcon()
+        {
+            MuteImage.Source = new BitmapImage(new Uri("pack://application:,,,/Images/mute.png", UriKind.Absolute));
+        }
+
+        public void SetUnmuteIcon()
+        {
+            MuteImage.Source = new BitmapImage(new Uri("pack://application:,,,/Images/unmute.png", UriKind.Absolute));
         }
     }
 }

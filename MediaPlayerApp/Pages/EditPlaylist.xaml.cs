@@ -38,15 +38,16 @@ namespace MediaPlayerApp
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var song = (MediaPlayerApp.Model.Song)((Button)sender).DataContext;
-            
-            Player.PlaySong(song);
+
+            Player.AddTo_songList(song);
         }
 
         private void ChooseFileButton_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of OpenFileDialog
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Mp3 Files (*.mp3)|*.mp3";
+            openFileDialog.Filter = "Audio Files (*.mp3;*.m4a)|*.mp3;*.m4a";
+
 
             // Show the dialog and check if the user selected a file
             if (openFileDialog.ShowDialog() == true)

@@ -9,7 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\mute.png" />
+    <None Remove="Images\unmute.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="taglib-sharp-netstandard2.0" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\mute.png" />
+    <Resource Include="Images\unmute.png" />
   </ItemGroup>
 
 </Project>

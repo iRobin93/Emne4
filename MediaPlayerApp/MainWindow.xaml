@@ -20,7 +20,7 @@
         Background = "LightBlue"
         Padding="10">
             <StackPanel VerticalAlignment="Center" >
-                <TextBlock>This is a header!</TextBlock>
+                <TextBlock FontSize="40" x:Name="headerText" Width="550">Spiller</TextBlock>
                 <Button Content="Administrer" HorizontalAlignment="Right" x:Name="AdminButton" Click="AdminButton_Click" />
             </StackPanel>
         </Border>
@@ -34,16 +34,28 @@
             <StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <!-- First Border (with fixed width and TextBlock) -->
-                    <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5" Width="75" Height="22">
+                    <Border BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Width="75" Height="22">
                         <TextBlock Text="Spilles nå:" VerticalAlignment="Center" HorizontalAlignment="Left" />
                     </Border>
 
                     <!-- Second Border with dynamic size based on the content -->
-                    <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5" Width="75" Height="22">
+                    <Border BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Width="75" Height="22">
                         <TextBlock x:Name="playingNowSongName" Text="Test" VerticalAlignment="Center" HorizontalAlignment="Left" />
                     </Border>
-                    <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5" Width="75" Height="22">
-                        <TextBlock Padding="28,0,0,0" Text="⏵" x:Name="pausePlayButton" MouseLeftButtonDown="pausePlayButton_MouseLeftButtonDown"></TextBlock>
+                    <Border BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Width="75" Height="22">
+                        <TextBlock Cursor="Hand" Padding="28,0,0,0" Text="⏵" x:Name="pausePlayButton" MouseLeftButtonDown="pausePlayButton_MouseLeftButtonDown"></TextBlock>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Width="50" Height="22">
+                        <TextBlock Cursor="Hand" MouseLeftButtonDown="previousSong_MouseLeftButtonDown"><Run Language="nb-no" Text="    "/><Run Text="⏮"/></TextBlock>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Width="50" Height="22">
+                        <TextBlock Cursor="Hand" MouseLeftButtonDown="nextSong_MouseLeftButtonDown"><Run Language="nb-no" Text="     "/><Run Text="⏭"/></TextBlock>
+                    </Border>
+                    <Border Width="285">
+                        <Slider Cursor="Hand" Name="volumeSlider" Minimum="0" Maximum="1" Value="0.5" TickFrequency="0.1" IsSnapToTickEnabled="True" SmallChange="0.1"  LargeChange="0.1" VerticalAlignment="Bottom" Margin="10"/>
+                    </Border>
+                    <Border>
+                        <Image Cursor="Hand" x:Name="MuteImage" MouseLeftButtonDown="Mute_MouseLeftButtonDown" Height="25" Source="/Images/unmute.png"/>
                     </Border>
                 </StackPanel>
 
@@ -62,7 +74,7 @@
                     <!-- Footer for song progress -->
                     <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="10" Height="20">
                         <TextBlock x:Name="currentTimeText" VerticalAlignment="Center" Margin="5" Width="60"/>
-                        <Slider x:Name="progressSlider" VerticalAlignment="Center" Height="20" Minimum="0" Maximum="100" Value="0" ValueChanged="ProgressSlider_ValueChanged" Width="370"/>
+                        <Slider Cursor="Hand" x:Name="progressSlider" VerticalAlignment="Center" Height="20" Minimum="0" Maximum="100" Value="0" ValueChanged="ProgressSlider_ValueChanged" Width="370"/>
                         <TextBlock x:Name="totalTimeText" VerticalAlignment="Center" Margin="5" Width="60"/>
                     </StackPanel>
 

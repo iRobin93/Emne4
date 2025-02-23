@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MediaPlayerApp.Model;
 using MediaPlayerApp.Pages;
 
 namespace MediaPlayerApp
@@ -37,6 +38,13 @@ namespace MediaPlayerApp
         private void Button_ClickDelete(object sender, RoutedEventArgs e)
         {
             
+        }
+
+        private void Button_ClickPlayPlaylist(object sender, RoutedEventArgs e)
+        {
+            var SelectedPlaylist = (MediaPlayerApp.Model.Playlist)((Button)sender).DataContext;
+            Player.ClearPlaylist();
+            Player.AddPlaylistToEnd(SelectedPlaylist);
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
