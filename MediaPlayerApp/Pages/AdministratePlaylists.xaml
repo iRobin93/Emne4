@@ -11,8 +11,9 @@
     <Grid>
         <!-- Bind to Playlists.playlists (List of Playlist objects) -->
         <StackPanel>
-            <TextBlock>Dette er Spillelister</TextBlock>
-            <ListBox x:Name="myListBox" ItemsSource="{Binding Source={x:Static local:Playlists.playlists}}">
+            <Button Click="Button_ClickSongs" HorizontalAlignment="Left" VerticalAlignment="Top">Sanger</Button>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                <ListBox x:Name="myListBox" ItemsSource="{Binding Source={x:Static local:Playlists.playlists}}" Height="180">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel>
@@ -26,6 +27,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+            </ScrollViewer>
             <Button Width="76" Content="+" HorizontalAlignment="Left" Click="AddButton_Click"/>
         </StackPanel>
         <!-- Bind to Playlists.playlists (List of Playlist objects) -->

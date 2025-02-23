@@ -51,5 +51,10 @@ namespace MediaPlayerApp
         {
             _mainFrame.Navigate(new CreateEditPlaylistPage(_mainFrame));
         }
+
+        private void Button_ClickSongs(object sender, RoutedEventArgs e)
+        {
+            _mainFrame.Navigate(new SongsPage(_mainFrame));
+        }
     }
 }

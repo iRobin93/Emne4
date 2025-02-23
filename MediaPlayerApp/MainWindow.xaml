@@ -19,9 +19,9 @@
         <Border Grid.Row="0"
         Background = "LightBlue"
         Padding="10">
-            <StackPanel VerticalAlignment="Center" >
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
                 <TextBlock FontSize="40" x:Name="headerText" Width="550">Spiller</TextBlock>
-                <Button Content="Administrer" HorizontalAlignment="Right" x:Name="AdminButton" Click="AdminButton_Click" />
+                <Button Content="Administrer" x:Name="AdminButton" Click="AdminButton_Click" VerticalAlignment="Center" HorizontalAlignment="Right" />
             </StackPanel>
         </Border>
 

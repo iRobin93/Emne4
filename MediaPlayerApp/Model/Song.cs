@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MediaPlayerApp.Data;
 
 namespace MediaPlayerApp.Model
 {
@@ -35,6 +36,9 @@ namespace MediaPlayerApp.Model
             Artist = artist;
             Title = title;
             FilePath = filepath;
+
+
+            Songs.AddSong(this);
         }
 
 
