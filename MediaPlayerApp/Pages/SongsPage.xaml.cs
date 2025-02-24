@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MediaPlayerApp.Data;
 using MediaPlayerApp.Model;
+using MediaPlayerApp.Windows;
 
 namespace MediaPlayerApp.Pages
 {
@@ -28,7 +29,7 @@ namespace MediaPlayerApp.Pages
             InitializeComponent();
             _mainFrame = mainFrame;
         }
-
+        //tests
         private void MenuItem_ClickAddToQueue(object sender, RoutedEventArgs e)
         {
             // Cast the sender as MenuItem
@@ -55,6 +56,8 @@ namespace MediaPlayerApp.Pages
             var menuItem = sender as MenuItem;
             // Get the DataContext from the MenuItem (the current item in the Grid)
             var selectedSong = menuItem?.CommandParameter as MediaPlayerApp.Model.Song;
+            ChoosePlaylistWindow modal = new ChoosePlaylistWindow();
+            modal.ShowDialog();
 
         }
 
