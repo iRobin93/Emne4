@@ -19,7 +19,7 @@ namespace MediaPlayerApp
             progressSlider.ValueChanged += ProgressSlider_ValueChanged;
             MainFrame.Navigate(_playerpage = new PlayerPage());
         }
-
+        //Test
         public void SetSongInfo(TagLib.File tagfile)
         {
             playingNowSongName.Text = tagfile.Tag.Title;
