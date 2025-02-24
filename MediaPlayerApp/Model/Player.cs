@@ -77,7 +77,9 @@ namespace MediaPlayerApp.Model
 
         public static void ClearPlaylist()
         {
+            _currentlyPlaying = null;
             _songList = new ObservableCollection<Song>();
+            mediaPlayer.Stop();
         }
 
         public static void AddPlaylistToEnd(Playlist playlist)
@@ -94,7 +96,14 @@ namespace MediaPlayerApp.Model
             if (_songList.Count == 0)
                 PlaySong(song);
             _songList.Add(song);
-            
+        }
+
+        public static void AddToNextInQueue(Song song)
+        {
+            if (_songList.Count == 0)
+                PlaySong(song);
+            int currentIndex = _songList.IndexOf(_currentlyPlaying);
+            _songList.Insert(currentIndex + 1, song);
         }
 
         public static void PlayNextSong()

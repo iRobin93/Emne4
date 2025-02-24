@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MediaPlayerApp.Data;
+using MediaPlayerApp.Model;
 
 namespace MediaPlayerApp.Pages
 {
@@ -27,29 +29,42 @@ namespace MediaPlayerApp.Pages
             _mainFrame = mainFrame;
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void MenuItem_ClickAddToQueue(object sender, RoutedEventArgs e)
         {
+            // Cast the sender as MenuItem
+            var menuItem = sender as MenuItem;
+            // Get the DataContext from the MenuItem (the current item in the Grid)
+            var selectedSong = menuItem?.CommandParameter as MediaPlayerApp.Model.Song;
+            Player.AddToNextInQueue(selectedSong);
 
         }
 
         private void MenuItem_ClickDeleteQueueAndAdd(object sender, RoutedEventArgs e)
         {
-
+            // Cast the sender as MenuItem
+            var menuItem = sender as MenuItem;
+            // Get the DataContext from the MenuItem (the current item in the Grid)
+            var selectedSong = menuItem?.CommandParameter as MediaPlayerApp.Model.Song;
+            Player.ClearPlaylist();
+            Player.AddToNextInQueue(selectedSong);
         }
 
         private void MenuItem_ClickAddToPlaylist(object sender, RoutedEventArgs e)
         {
+            // Cast the sender as MenuItem
+            var menuItem = sender as MenuItem;
+            // Get the DataContext from the MenuItem (the current item in the Grid)
+            var selectedSong = menuItem?.CommandParameter as MediaPlayerApp.Model.Song;
 
         }
 
         private void MenuItem_ClickDeleteSong(object sender, RoutedEventArgs e)
         {
-
+            // Cast the sender as MenuItem
+            var menuItem = sender as MenuItem;
+            // Get the DataContext from the MenuItem (the current item in the Grid)
+            var selectedSong = menuItem?.CommandParameter as MediaPlayerApp.Model.Song;
+            Songs.DeleteSong(selectedSong);
         }
 
 

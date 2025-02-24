@@ -17,5 +17,12 @@ namespace MediaPlayerApp.Data
         {
             AllSongs.Add(song);
         }
+
+        public static void DeleteSong(Song song)
+        {
+            AllSongs.Remove(song);
+            Playlists.DeleteSongFromAllPlaylists(song);
+        }
+
     }
 }
