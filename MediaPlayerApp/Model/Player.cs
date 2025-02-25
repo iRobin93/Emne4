@@ -13,7 +13,7 @@ namespace MediaPlayerApp.Model
     public static class Player
     {
         private static MediaPlayer mediaPlayer = new MediaPlayer();
-        private static Song _currentlyPlaying;
+        private static int _currentlyPlayingIndex = -1;
         public static ObservableCollection<Song> _songList = new ObservableCollection<Song>();
         private static int _volume;
         private static TimeSpan _duration;
@@ -22,7 +22,7 @@ namespace MediaPlayerApp.Model
         private static DispatcherTimer _timer;
         private static double _songDuration;
         private static double _previousVolume;
-
+        private static PlayerPage _playerpage;
 
         static Player()
         {
@@ -34,6 +34,11 @@ namespace MediaPlayerApp.Model
             };
         }
 
+
+        public static void SetPlayerPage(PlayerPage page)
+        {
+            _playerpage = page;
+        }
         public static void MuteOrUnMute()
         {
             if (mediaPlayer.Volume > 0)
@@ -53,10 +58,11 @@ namespace MediaPlayerApp.Model
             _mainwindow.volumeSlider.Value = mediaPlayer.Volume;
         }
 
-        private static void PlaySong(Song song)
+        private static void PlaySong(int songIndex)
         {
+            var song = _songList[songIndex];
             var tagFile = TagLib.File.Create(song.FilePath);
-            _currentlyPlaying = song;
+            _currentlyPlayingIndex = songIndex;
             mediaPlayer.Open(new Uri(song.FilePath));
             mediaPlayer.Play();
             _duration = tagFile.Properties.Duration;
@@ -64,7 +70,7 @@ namespace MediaPlayerApp.Model
             _isPlaying = true;
             _mainwindow.ChangeToPause();
             _mainwindow.SetSongInfo(tagFile);
-
+            _playerpage.RefreshListbox();
             // Set the slider maximum value
             _mainwindow.progressSlider.Maximum = _songDuration;
 
@@ -77,52 +83,56 @@ namespace MediaPlayerApp.Model
 
         public static void ClearPlaylist()
         {
-            _currentlyPlaying = null;
+            _currentlyPlayingIndex = -1;
             _songList.Clear();
             mediaPlayer.Stop();
         }
 
         public static void AddPlaylistToEnd(Playlist playlist)
         {
-            if (_songList.Count == 0 && playlist.Songs.Count > 0)
-                PlaySong(playlist.Songs[0]);
+
             foreach (Song song in playlist.Songs)
+            {   
                 _songList.Add(song);
+            }
+            if (_songList.Count == playlist.Songs.Count && playlist.Songs.Count > 0)
+                PlaySong(0);
         }
+
+       
 
         public static void AddTo_songList(Song song)
         {
-
-            if (_songList.Count == 0)
-                PlaySong(song);
             _songList.Add(song);
+            if (_songList.Count == 1)
+                PlaySong(0);
         }
 
         public static void AddToNextInQueue(Song song)
         {
-            if (_songList.Count == 0)
-                PlaySong(song);
-            int currentIndex = _songList.IndexOf(_currentlyPlaying);
-            _songList.Insert(currentIndex + 1, song);
+
+            
+            _songList.Insert(_currentlyPlayingIndex + 1, song);
+            if (_songList.Count == 1)
+                PlaySong(0);
         }
 
         public static void PlayNextSong()
         {
-            // Find the index of the currently playing song
-            int currentIndex = _songList.IndexOf(_currentlyPlaying);
+        
             // Check if the song is not the last one in the list
-            if (currentIndex >= 0 && currentIndex < _songList.Count - 1)
+            if (_currentlyPlayingIndex >= 0 && _currentlyPlayingIndex < _songList.Count - 1)
             {
                 // Return the next song in the list
-                PlaySong(_songList[currentIndex + 1]);
+                PlaySong(_currentlyPlayingIndex + 1);
             }
             // do nothing if there is no next song.
 
         }
 
-        public static bool SongIsPlaying(Song song)
+        public static bool SongIsPlaying(int songIndex)
         {
-            if (_currentlyPlaying == song)
+            if (_currentlyPlayingIndex == songIndex)
                 return true;
             else return false;
 
@@ -130,24 +140,22 @@ namespace MediaPlayerApp.Model
 
         public static void RestartSong()
         {
-            // Find the index of the currently playing song
-            int currentIndex = _songList.IndexOf(_currentlyPlaying);
-            if (currentIndex >= 0)
-                PlaySong(_songList[currentIndex]);
+
+            if (_currentlyPlayingIndex >= 0)
+                PlaySong(_currentlyPlayingIndex);
         }
 
 
         public static void PlayPreviousSong()
         {
-            // Find the index of the currently playing song
-            int currentIndex = _songList.IndexOf(_currentlyPlaying);
+
             // Check if the song is not the last one in the list
-            if (currentIndex > 0)
+            if (_currentlyPlayingIndex > 0)
             {
-                PlaySong(_songList[currentIndex - 1]);
+                PlaySong(_currentlyPlayingIndex - 1);
             }
-            else if (currentIndex == 0)
-                PlaySong(_songList[currentIndex]);
+            else if (_currentlyPlayingIndex == 0)
+                PlaySong(_currentlyPlayingIndex);
         }
 
 
