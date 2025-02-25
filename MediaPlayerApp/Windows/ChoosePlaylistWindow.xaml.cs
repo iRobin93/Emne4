@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MediaPlayerApp.Model;
 
 namespace MediaPlayerApp.Windows
 {
@@ -19,13 +20,17 @@ namespace MediaPlayerApp.Windows
     /// </summary>
     public partial class ChoosePlaylistWindow : Window
     {
+        public Playlist ChosenPlaylist;
         public ChoosePlaylistWindow()
         {
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            // Cast the sender as Playlist
+            ChosenPlaylist = (MediaPlayerApp.Model.Playlist)((TextBlock)sender).DataContext;
+            this.DialogResult = true;
             this.Close();
         }
     }

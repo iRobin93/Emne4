@@ -10,11 +10,11 @@ using TagLib;
 
 namespace MediaPlayerApp.Model
 {
-    static class Player
+    public static class Player
     {
         private static MediaPlayer mediaPlayer = new MediaPlayer();
         private static Song _currentlyPlaying;
-        private static ObservableCollection<Song> _songList = new ObservableCollection<Song>();
+        public static ObservableCollection<Song> _songList = new ObservableCollection<Song>();
         private static int _volume;
         private static TimeSpan _duration;
         private static bool _isPlaying = false;
@@ -78,7 +78,7 @@ namespace MediaPlayerApp.Model
         public static void ClearPlaylist()
         {
             _currentlyPlaying = null;
-            _songList = new ObservableCollection<Song>();
+            _songList.Clear();
             mediaPlayer.Stop();
         }
 
@@ -117,6 +117,14 @@ namespace MediaPlayerApp.Model
                 PlaySong(_songList[currentIndex + 1]);
             }
             // do nothing if there is no next song.
+
+        }
+
+        public static bool SongIsPlaying(Song song)
+        {
+            if (_currentlyPlaying == song)
+                return true;
+            else return false;
 
         }
 

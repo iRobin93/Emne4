@@ -57,7 +57,12 @@ namespace MediaPlayerApp.Pages
             // Get the DataContext from the MenuItem (the current item in the Grid)
             var selectedSong = menuItem?.CommandParameter as MediaPlayerApp.Model.Song;
             ChoosePlaylistWindow modal = new ChoosePlaylistWindow();
-            modal.ShowDialog();
+            bool? result = modal.ShowDialog();
+            if (result == true)
+            {
+                modal.ChosenPlaylist.AddSong(selectedSong);
+            }
+            
 
         }
 

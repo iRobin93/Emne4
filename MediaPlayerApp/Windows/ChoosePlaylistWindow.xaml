@@ -3,10 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MediaPlayerApp.Windows"
+        xmlns:local="clr-namespace:MediaPlayerApp.Data"
         mc:Ignorable="d"
         Title="ChoosePlaylistWindow" Height="450" Width="800">
     <Grid>
-        <Button VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click">Lagre</Button>
+        <!-- Bind to Playlists.playlists (List of Playlist objects) -->
+        <StackPanel>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                <ListBox x:Name="myListBox" ItemsSource="{Binding Source={x:Static local:Playlists.playlists}}" Height="180">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <WrapPanel>
+                                <!-- Display Playlist Name -->
+                                <TextBlock MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Text="{Binding Name}" FontWeight="Bold" />
+                            </WrapPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+        </StackPanel>
     </Grid>
 </Window>
