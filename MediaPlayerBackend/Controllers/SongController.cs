@@ -26,6 +26,6 @@ public class SongsController : ControllerBase
     {
         _context.Songs.Add(song);
         await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetSongs), new { id = song.SongId }, song);
+        return CreatedAtAction(nameof(GetSongs), new { id = song.Id }, song);
     }
 }

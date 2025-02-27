@@ -14,33 +14,33 @@ public class PlaylistsController : ControllerBase
         _context = context;
     }
 
-    // GET: api/Playlists
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Playlist>>> GetPlaylists()
     {
         return await _context.Playlists.Include(p => p.Songs).ToListAsync();
     }
 
-    // POST: api/Playlists
     [HttpPost]
-    public async Task<ActionResult<Playlist>> PostPlaylist(Playlist playlist)
+    public async Task<ActionResult<Playlist>> CreatePlaylist(Playlist playlist)
     {
         _context.Playlists.Add(playlist);
         await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetPlaylists), new { id = playlist.PlaylistId }, playlist);
+        return CreatedAtAction(nameof(GetPlaylists), new { id = playlist.Id }, playlist);
     }
 
-    // POST: api/Playlists/AddSongToPlaylist
-    [HttpPost("AddSongToPlaylist")]
-    public async Task<ActionResult> AddSongToPlaylist(int playlistId, int songId)
+    [HttpPost("{playlistId}/add-song/{songId}")]
+    public async Task<IActionResult> AddSongToPlaylist(int playlistId, int songId)
     {
-        var playlistSong = new PlaylistSong
-        {
-            PlaylistId = playlistId,
-            SongId = songId
-        };
-        _context.PlaylistSongs.Add(playlistSong);
+        var playlist = await _context.Playlists.Include(p => p.Songs)
+                                               .FirstOrDefaultAsync(p => p.Id == playlistId);
+        var song = await _context.Songs.FindAsync(songId);
+
+        if (playlist == null || song == null)
+            return NotFound();
+
+        playlist.Songs.Add(song);
         await _context.SaveChangesAsync();
-        return Ok();
+
+        return NoContent();
     }
 }

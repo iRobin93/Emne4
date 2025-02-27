@@ -8,6 +8,9 @@ using System.Windows.Controls;
 using System.Windows;
 using MediaPlayerApp.Data;
 using MediaPlayerApp.Windows;
+using System.Net.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace MediaPlayerApp.Model
 {
@@ -42,11 +45,23 @@ namespace MediaPlayerApp.Model
             Title = title;
             FilePath = filepath;
 
-
+            CreateSongAsync(this);
             Songs.AddSong(this);
+
         }
 
+        public async Task CreateSongAsync(Song song)
+        {
+            var json = JsonConvert.SerializeObject(song);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
 
+            var response = await CommonModel.client.PostAsync("https://localhost:7034/api/Songs", content);
+            var responseContent = await response.Content.ReadAsStringAsync();
+            JObject jsonObject = JObject.Parse(responseContent);
+            song.Id = jsonObject["id"].Value<int>();
+            response.EnsureSuccessStatusCode();
+
+        }
 
         // This method is called to raise the PropertyChanged event
         protected virtual void OnPropertyChanged(string propertyName)

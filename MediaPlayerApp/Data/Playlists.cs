@@ -25,7 +25,6 @@ namespace MediaPlayerApp.Data
             //mySong = new Song("All that she wants", "Ace of Base", filePath);
             myPlayList.AddSong(Songs.AllSongs[1]);
             myPlayList.AddSong(Songs.AllSongs[2]);
-            myPlayList.AddSong(Songs.AllSongs[3]);
             myPlayList2.AddSong(Songs.AllSongs[1]);
             playlists.Add(myPlayList);
             playlists.Add(myPlayList2);
