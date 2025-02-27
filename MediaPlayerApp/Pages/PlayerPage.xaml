@@ -15,7 +15,7 @@
 
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <Image x:Name="songImage" Height="226" Width="289" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Image Margin="40,55,0,0" x:Name="songImage" Height="226" Width="289" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <StackPanel>
                 <TextBlock FontWeight="Bold" FontSize="20" Margin="6,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">JukeBox</TextBlock>
                 <StackPanel Margin="8,0,0,0" Orientation="Horizontal" >
@@ -23,16 +23,16 @@
                     <TextBlock>Artist:</TextBlock>
                 </StackPanel>
                 
-            <Border Height="227" Width="409" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Margin="0,5,0,0">
+            <Border Height="240" Width="409" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Margin="0,5,0,0">
                 
                 <ScrollViewer HorizontalScrollBarVisibility="Auto">
                         <ListBox x:Name="myListBox" ItemsSource="{Binding Source={x:Static local:Player._songList}}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <WrapPanel>
-                                    <!-- Display Playlist Name -->
-                                    <TextBlock  Width="150" Text="{Binding title}" FontWeight="Bold" />
-                                        <TextBlock Width="90" Text="{Binding Artist}"> </TextBlock>
+                                    <WrapPanel Cursor="Hand">
+                                        <!-- Display Playlist Name -->
+                                        <TextBlock  Width="150" Text="{Binding title}" FontWeight="Bold" />
+                                        <TextBlock Width="90" Text="{Binding Artist}"></TextBlock>
                                         <Image Margin="25,0,0,0" Width="15" Source="/Images/unmute.png">
                                             <Image.Visibility>
                                                 <MultiBinding Converter="{StaticResource SongToVisibilityConverter}">
@@ -42,7 +42,7 @@
                                             </Image.Visibility>
                                         </Image>
                                     </WrapPanel>
-                            </DataTemplate>
+                                </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </ScrollViewer>

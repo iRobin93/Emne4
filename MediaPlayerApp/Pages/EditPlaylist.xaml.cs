@@ -35,13 +35,6 @@ namespace MediaPlayerApp
             _selectedPlaylist = selectedPlaylist;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var song = (MediaPlayerApp.Model.Song)((Button)sender).DataContext;
-
-            Player.AddTo_songList(song);
-        }
-
         private void ChooseFileButton_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of OpenFileDialog
@@ -58,5 +51,36 @@ namespace MediaPlayerApp
                 _mainFrame.Navigate(new AddSong(_mainFrame, filePath, _selectedPlaylist));
             }
         }
+
+        private void MenuItem_ClickAddToQueue(object sender, RoutedEventArgs e)
+        {
+            CommonSongMethods.MenuItem_ClickAddToQueue(sender, e);
+
+        }
+
+        private void MenuItem_ClickDeleteQueueAndAdd(object sender, RoutedEventArgs e)
+        {
+            CommonSongMethods.MenuItem_ClickDeleteQueueAndAdd(sender, e);
+        }
+
+        private void MenuItem_ClickAddToPlaylist(object sender, RoutedEventArgs e)
+        {
+            CommonSongMethods.MenuItem_ClickAddToPlaylist(sender, e);
+        }
+
+        private void MenuItem_ClickAddNextInQueue(object sender, RoutedEventArgs e)
+        {
+            CommonSongMethods.MenuItem_ClickAddNextInQueue(sender, e);
+        }
+
+        private void MenuItem_ClickDeleteSong(object sender, RoutedEventArgs e)
+        {
+            // Cast the sender as MenuItem
+            var menuItem = sender as MenuItem;
+            // Get the DataContext from the MenuItem (the current item in the Grid)
+            var selectedSong = menuItem?.CommandParameter as MediaPlayerApp.Model.Song;
+            //Songs.DeleteSong(selectedSong);
+        }
+
     }
 }

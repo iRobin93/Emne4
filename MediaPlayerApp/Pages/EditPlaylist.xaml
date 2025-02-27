@@ -15,13 +15,24 @@
             <ListBox x:Name="myListBox">
             <ListBox.ItemTemplate>
                 <DataTemplate>
+                        <Grid> 
+                                                            <!-- ContextMenu for the entire item -->
+                                <Grid.ContextMenu>
+                                    <ContextMenu>
+                                        <!-- Bind the CommandParameter to the current item -->
+                                        <MenuItem Header="Legg til i kø" Click="MenuItem_ClickAddToQueue" CommandParameter="{Binding}" />
+                                        <MenuItem Header="Slett kø og legg til" Click="MenuItem_ClickDeleteQueueAndAdd" CommandParameter="{Binding}" />
+                                        <MenuItem Header="Legg til neste i kø" Click="MenuItem_ClickAddNextInQueue" CommandParameter="{Binding}" />
+                                        <MenuItem Header="Slett sang i spilleliste" Click="MenuItem_ClickDeleteSong" CommandParameter="{Binding}" />
+                                    </ContextMenu>
+                                </Grid.ContextMenu>
                         <StackPanel Orientation="Horizontal">
                         <!-- Display Playlist Name -->
 
-                        <TextBlock Text="{Binding title}" FontWeight="Bold" Width="66" />
-                        <Button Click="Button_Click">Play</Button>
-                    </StackPanel>
-                </DataTemplate>
+                                <TextBlock Text="{Binding title}" FontWeight="Bold" Width="300" />
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
             <Button Click="ChooseFileButton_Click">Velg fil</Button>

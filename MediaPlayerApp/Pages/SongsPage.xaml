@@ -27,6 +27,7 @@
                                         <!-- Bind the CommandParameter to the current item -->
                                         <MenuItem Header="Legg til i kø" Click="MenuItem_ClickAddToQueue" CommandParameter="{Binding}" />
                                         <MenuItem Header="Slett kø og legg til" Click="MenuItem_ClickDeleteQueueAndAdd" CommandParameter="{Binding}" />
+                                        <MenuItem Header="Legg til neste i kø" Click="MenuItem_ClickAddNextInQueue" CommandParameter="{Binding}" />
                                         <MenuItem Header="Legg til i spilleliste" Click="MenuItem_ClickAddToPlaylist" CommandParameter="{Binding}" />
                                         <MenuItem Header="Slett sang" Click="MenuItem_ClickDeleteSong" CommandParameter="{Binding}" />
                                     </ContextMenu>
@@ -42,6 +43,7 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </ScrollViewer>
+            <Button Click="ChooseFileButton_Click">Legg til sang</Button>
         </StackPanel>
     </Grid>
 

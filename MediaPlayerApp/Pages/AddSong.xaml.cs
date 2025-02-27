@@ -43,18 +43,23 @@ namespace MediaPlayerApp.Pages
         private void SaveSong(object sender, RoutedEventArgs e)
         {
             bool addSong = true;
-            foreach (Playlist playlist in Playlists.playlists)
-                foreach (Song song in (ObservableCollection<Song>) playlist.Songs)
+                foreach (Song song in (ObservableCollection<Song>) Songs.AllSongs)
                     if (FilePath == song.FilePath)
                     {
                         addSong = false;
+                    if (_selectedPlaylist != null)
+                    {
                         _selectedPlaylist.AddSong(song);
+                    }
+                        
                         goto foundSong;
                     }
 
             if (addSong)
             {
-                _selectedPlaylist.AddSong(new Song(SongName.Text, ArtistName.Text, FilePath));
+                if (_selectedPlaylist != null)
+                    _selectedPlaylist.AddSong(new Song(SongName.Text, ArtistName.Text, FilePath));
+                else new Song(SongName.Text, ArtistName.Text, FilePath);
             }
         foundSong:
             _mainFrame.GoBack();

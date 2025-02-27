@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MediaPlayerApp.Data;
 using MediaPlayerApp.Model;
 using MediaPlayerApp.Pages;
 
@@ -27,26 +28,69 @@ namespace MediaPlayerApp
         {
             InitializeComponent();
             _mainFrame = mainframe;
+            myListBox.PreviewMouseDoubleClick += MyListBox_PreviewMouseDoubleClick;
         }
 
-        private void Button_ClickEdit(object sender, RoutedEventArgs e)
+
+
+        private void MyListBox_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var SelectedPlaylist = (MediaPlayerApp.Model.Playlist)((Button)sender).DataContext;
+            ListBoxItem listBoxItem = GetListBoxItemFromMouseEvent(e);
+            if (listBoxItem != null)
+            {
+                // Handle the click event here (e.g., play the song, show details, etc.)
+                // Cast the sender as MenuItem
+                var selectedPlaylist = listBoxItem.DataContext as Playlist;
+                _mainFrame.Navigate(new EditPlaylist(_mainFrame, selectedPlaylist));
+
+            }
+        }
+
+        private ListBoxItem GetListBoxItemFromMouseEvent(MouseButtonEventArgs e)
+        {
+            DependencyObject depObj = e.OriginalSource as DependencyObject;
+            while (depObj != null && !(depObj is ListBoxItem))
+            {
+                depObj = VisualTreeHelper.GetParent(depObj);
+            }
+            return depObj as ListBoxItem;
+        }
+
+        private void MenuItem_Edit(object sender, RoutedEventArgs e)
+        {
+
+            // Cast the sender as MenuItem
+            var menuItem = sender as MenuItem;
+            // Get the DataContext from the MenuItem (the current item in the Grid)
+            var SelectedPlaylist = menuItem?.CommandParameter as MediaPlayerApp.Model.Playlist;
             _mainFrame.Navigate(new EditPlaylist(_mainFrame, SelectedPlaylist));
         }
 
-        private void Button_ClickDelete(object sender, RoutedEventArgs e)
+        private void MenuItem_PlayPlaylist(object sender, RoutedEventArgs e)
         {
-            
-        }
 
-        private void Button_ClickPlayPlaylist(object sender, RoutedEventArgs e)
-        {
-            var SelectedPlaylist = (MediaPlayerApp.Model.Playlist)((Button)sender).DataContext;
+            // Cast the sender as MenuItem
+            var menuItem = sender as MenuItem;
+            // Get the DataContext from the MenuItem (the current item in the Grid)
+            var SelectedPlaylist = menuItem?.CommandParameter as MediaPlayerApp.Model.Playlist;
             Player.ClearPlaylist();
             Player.AddPlaylistToEnd(SelectedPlaylist);
         }
+        private void MenuItem_AddPlaylistToQueue(object sender, RoutedEventArgs e)
+        {
 
+            // Cast the sender as MenuItem
+            var menuItem = sender as MenuItem;
+            // Get the DataContext from the MenuItem (the current item in the Grid)
+            var SelectedPlaylist = menuItem?.CommandParameter as MediaPlayerApp.Model.Playlist;
+            Player.AddPlaylistToEnd(SelectedPlaylist);
+        }
+        
+
+        private void MenuItem_Delete(object sender, RoutedEventArgs e)
+        {
+
+        }
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             _mainFrame.Navigate(new CreateEditPlaylistPage(_mainFrame));

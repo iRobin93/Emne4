@@ -58,10 +58,11 @@ namespace MediaPlayerApp.Model
             _mainwindow.volumeSlider.Value = mediaPlayer.Volume;
         }
 
-        private static void PlaySong(int songIndex)
+        public static void PlaySong(int songIndex)
         {
             var song = _songList[songIndex];
             var tagFile = TagLib.File.Create(song.FilePath);
+            _mainwindow.UpdateProgressSlider(0);
             _currentlyPlayingIndex = songIndex;
             mediaPlayer.Open(new Uri(song.FilePath));
             mediaPlayer.Play();
@@ -126,7 +127,11 @@ namespace MediaPlayerApp.Model
                 // Return the next song in the list
                 PlaySong(_currentlyPlayingIndex + 1);
             }
-            // do nothing if there is no next song.
+            else
+            {
+                _currentlyPlayingIndex = -1;
+                _mainwindow.ChangeToPlay();
+            }
 
         }
 
@@ -143,6 +148,10 @@ namespace MediaPlayerApp.Model
 
             if (_currentlyPlayingIndex >= 0)
                 PlaySong(_currentlyPlayingIndex);
+            if(_currentlyPlayingIndex == -1 && _songList.Count > 0)
+            {
+                PlaySong(_songList.Count - 1);
+            }
         }
 
 
@@ -154,8 +163,8 @@ namespace MediaPlayerApp.Model
             {
                 PlaySong(_currentlyPlayingIndex - 1);
             }
-            else if (_currentlyPlayingIndex == 0)
-                PlaySong(_currentlyPlayingIndex);
+            else if (_songList.Count > 0)
+                PlaySong(_songList.Count - 1);
         }
 
 
@@ -175,9 +184,14 @@ namespace MediaPlayerApp.Model
 
         public static void ResumeSong()
         {
-            _isPlaying = true;
-            mediaPlayer.Play();
-            _mainwindow.ChangeToPause();
+
+            if(_currentlyPlayingIndex != -1)
+            {
+                _isPlaying = true;
+                 mediaPlayer.Play();
+                _mainwindow.ChangeToPause();
+            }
+            
         }
 
         // Timer tick event to update the progress slider
@@ -192,7 +206,7 @@ namespace MediaPlayerApp.Model
             {
                 // Stop the timer when the song is over
                 PlayNextSong();
-                _mainwindow.UpdateProgressSlider(0);
+               // _mainwindow.UpdateProgressSlider(0);
                 _timer.Stop();
             }
         }

@@ -28,8 +28,30 @@ namespace MediaPlayerApp
             // Subscribe to the Loaded event of ListBoxItems
             myListBox.Loaded += MyListBox_Loaded;
             Player.SetPlayerPage(this);
+            myListBox.PreviewMouseDoubleClick += MyListBox_PreviewMouseDoubleClick;
         }
 
+
+        private void MyListBox_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ListBoxItem listBoxItem = GetListBoxItemFromMouseEvent(e);
+            if (listBoxItem != null)
+            {
+                // Handle the click event here (e.g., play the song, show details, etc.)
+                Player.PlaySong((int)listBoxItem.Tag);
+                
+            }
+        }
+
+        private ListBoxItem GetListBoxItemFromMouseEvent(MouseButtonEventArgs e)
+        {
+            DependencyObject depObj = e.OriginalSource as DependencyObject;
+            while (depObj != null && !(depObj is ListBoxItem))
+            {
+                depObj = VisualTreeHelper.GetParent(depObj);
+            }
+            return depObj as ListBoxItem;
+        }
 
         public void UpdateImageSource(BitmapImage image)
         {
@@ -83,6 +105,5 @@ namespace MediaPlayerApp
                 myListBox.ItemContainerGenerator.StatusChanged -= ItemContainerGenerator_StatusChanged;
             }
         }
-
     }
 }

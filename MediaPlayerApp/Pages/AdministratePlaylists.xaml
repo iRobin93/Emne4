@@ -16,15 +16,23 @@
                 <ListBox x:Name="myListBox" ItemsSource="{Binding Source={x:Static local:Playlists.playlists}}" Height="180">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <WrapPanel>
+                            <Grid>
+                                <Grid.ContextMenu>
+                                    <ContextMenu>
+                                        <!-- Bind the CommandParameter to the current item -->
+                                        <MenuItem Header="Endre" Click="MenuItem_Edit" CommandParameter="{Binding}" />
+                                        <MenuItem Header="Spill spilleliste" Click="MenuItem_PlayPlaylist" CommandParameter="{Binding}" />
+                                        <MenuItem Header="Legg spilleliste til kø" Click="MenuItem_AddPlaylistToQueue" CommandParameter="{Binding}" />
+                                        <MenuItem Header="Slett" Click="MenuItem_Delete" CommandParameter="{Binding}" />
+                                        
+                                    </ContextMenu>
+                                </Grid.ContextMenu>
+                                <WrapPanel Cursor="Hand">
                         <!-- Display Playlist Name -->
-                        <TextBlock Text="{Binding Name}" FontWeight="Bold" />
-
-                        <Button Content="Endre" Click="Button_ClickEdit"/>
-                        <Button Content="Slett" Click="Button_ClickDelete"/>
-                        <Button Content="Spill spilleliste" Click="Button_ClickPlayPlaylist"/>
-                    </WrapPanel>
-                </DataTemplate>
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" Width="400" />
+                                </WrapPanel>
+                            </Grid>
+                        </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
             </ScrollViewer>

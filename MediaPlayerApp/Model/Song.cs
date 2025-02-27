@@ -4,15 +4,20 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows;
 using MediaPlayerApp.Data;
+using MediaPlayerApp.Windows;
 
 namespace MediaPlayerApp.Model
 {
     public class Song : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+
 
         private static int _nextSongId = 1;
+        public event PropertyChangedEventHandler PropertyChanged;
+        
         private int Id { get; set; }
         public string Artist { get; private set; }
         private string Title { get; set; }

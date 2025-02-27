@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MediaPlayerApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="700" Width="1000">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -20,8 +20,53 @@
         Background = "LightBlue"
         Padding="10">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
-                <TextBlock FontSize="40" x:Name="headerText" Width="550">Spiller</TextBlock>
-                <Button Content="Administrer" x:Name="AdminButton" Click="AdminButton_Click" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                <TextBlock FontSize="40" x:Name="headerText" Width="750">Spiller</TextBlock>
+                <Button Content="Administrer" 
+                x:Name="AdminButton" 
+                Click="AdminButton_Click"
+                 Height="50"
+                 Width="200">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <!-- Button style with a custom template -->
+                            <Setter Property="Background" Value="#E0E0E0" />
+                            <!-- Light gray background -->
+                            <Setter Property="Foreground" Value="Black" />
+                            <!-- Black text -->
+                            <Setter Property="FontSize" Value="16" />
+                            <Setter Property="Padding" Value="12,6" />
+                            <Setter Property="BorderBrush" Value="#B0B0B0" />
+                            <!-- Medium gray border -->
+                            <Setter Property="BorderThickness" Value="1" />
+
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}" 
+                                        BorderBrush="{TemplateBinding BorderBrush}" 
+                                        BorderThickness="{TemplateBinding BorderThickness}" 
+                                        CornerRadius="5">
+                                            <!-- Adding CornerRadius to Border -->
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#D0D0D0" />
+                                    <!-- Slightly darker gray on hover -->
+                                    <Setter Property="Cursor" Value="Hand" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#B0B0B0" />
+                                    <!-- Even darker gray when pressed -->
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </StackPanel>
         </Border>
 
@@ -34,22 +79,22 @@
             <StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <!-- First Border (with fixed width and TextBlock) -->
-                    <Border BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Width="75" Height="22">
-                        <TextBlock Text="Spilles nå:" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                    <Border BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Width="120" Height="40">
+                        <TextBlock FontSize="20" Text="Spilles nå:" VerticalAlignment="Center" HorizontalAlignment="Left" />
                     </Border>
 
                     <!-- Second Border with dynamic size based on the content -->
-                    <Border BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Width="75" Height="22">
-                        <TextBlock x:Name="playingNowSongName" Text="Test" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                    <Border BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Width="230" Height="40">
+                        <TextBlock FontSize="20" x:Name="playingNowSongName" Text="" VerticalAlignment="Center" HorizontalAlignment="Left" />
                     </Border>
-                    <Border BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Width="75" Height="22">
-                        <TextBlock Cursor="Hand" Padding="28,0,0,0" Text="⏵" x:Name="pausePlayButton" MouseLeftButtonDown="pausePlayButton_MouseLeftButtonDown"></TextBlock>
+                    <Border BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Width="120" Height="40">
+                        <TextBlock FontSize="40" Margin="0,-12,0,2" Padding="40,0,0,0" Cursor="Hand"  Text="⏵" x:Name="pausePlayButton"  MouseLeftButtonDown="pausePlayButton_MouseLeftButtonDown"></TextBlock>
                     </Border>
-                    <Border BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Width="50" Height="22">
-                        <TextBlock Cursor="Hand" MouseLeftButtonDown="previousSong_MouseLeftButtonDown"><Run Language="nb-no" Text="    "/><Run Text="⏮"/></TextBlock>
+                    <Border BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Width="80" Height="40">
+                        <TextBlock FontSize="30" Margin="-14,-4,14,-5" Cursor="Hand" MouseLeftButtonDown="previousSong_MouseLeftButtonDown"><Run Language="nb-no" Text="    "/><Run Text="⏮"/></TextBlock>
                     </Border>
-                    <Border BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Width="50" Height="22">
-                        <TextBlock Cursor="Hand" MouseLeftButtonDown="nextSong_MouseLeftButtonDown"><Run Language="nb-no" Text="     "/><Run Text="⏭"/></TextBlock>
+                    <Border BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Width="80" Height="40">
+                        <TextBlock FontSize="30" Margin="-14,-4,14,-5" Cursor="Hand" MouseLeftButtonDown="nextSong_MouseLeftButtonDown" Text="    ⏭" />
                     </Border>
                     <Border Width="285">
                         <Slider Cursor="Hand" Name="volumeSlider" Minimum="0" Maximum="1" Value="0.5" TickFrequency="0.1" IsSnapToTickEnabled="True" SmallChange="0.1"  LargeChange="0.1" VerticalAlignment="Bottom" Margin="10"/>
@@ -62,13 +107,13 @@
                 <!-- Second StackPanel -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <!-- First Border (with fixed width and TextBlock) -->
-                    <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5" Width="75" Height="22">
-                        <TextBlock Text="Artist:" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                    <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5" Width="120" Height="40">
+                        <TextBlock FontSize="20" Padding="0,0,0,0" Text="Artist:" VerticalAlignment="Center" HorizontalAlignment="Left" />
                     </Border>
 
                     <!-- Second Border with dynamic size based on the content -->
-                    <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5"  Width="75" Height="22">
-                        <TextBlock x:Name="playingNowArtist" Text="Test" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                    <Border BorderBrush="Black" BorderThickness="2" Padding="2" CornerRadius="5" Width="230" Height="40">
+                        <TextBlock FontSize="20" x:Name="playingNowArtist" Text="" VerticalAlignment="Center" HorizontalAlignment="Left" />
                     </Border>
 
                     <!-- Footer for song progress -->

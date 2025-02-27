@@ -18,6 +18,7 @@ namespace MediaPlayerApp
             InitializeComponent();
             progressSlider.ValueChanged += ProgressSlider_ValueChanged;
             MainFrame.Navigate(_playerpage = new PlayerPage());
+            
         }
         //Test
         public void SetSongInfo(TagLib.File tagfile)
@@ -77,19 +78,32 @@ namespace MediaPlayerApp
         private void pausePlayButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (Player.IsPlaying())
+            {
                 Player.PauseSong();
+            }
+
             else
+            {
                 Player.ResumeSong();
+            }
+                
         }
 
         public void ChangeToPlay()
         {
             pausePlayButton.Text = "⏵"; // Play symbol
+            pausePlayButton.FontSize = 40;
+            var currentMargin = pausePlayButton.Margin;
+            pausePlayButton.Margin = new Thickness(currentMargin.Left, -12, currentMargin.Right, currentMargin.Bottom);
         }
 
         public void ChangeToPause()
         {
             pausePlayButton.Text = "⏸"; // Pause symbol
+            pausePlayButton.FontSize = 31;
+            // Get the current margin, modify the Top value, and then set it back.
+            var currentMargin = pausePlayButton.Margin;
+            pausePlayButton.Margin = new Thickness(currentMargin.Left, -5, currentMargin.Right, currentMargin.Bottom);
         }
 
         // Update the progress slider with the current song position
