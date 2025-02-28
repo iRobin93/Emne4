@@ -19,13 +19,13 @@ namespace MediaPlayerApp.Data
             string filePath = userProfile + @"\Documents\Music\spotidownloader.com - Yellow - Coldplay.mp3";
             //var mySong = new Song("Yellow", "ColdPlay", filePath);
             //var mySong = new Song("Yellow", "ColdPlay", "C:\\Users\\robin\\Documents\\Music\\spotidownloader.com - Yellow - Coldplay.mp3");
-            myPlayList.AddSong(Songs.AllSongs[0]);
+            //myPlayList.AddSong(Songs.AllSongs[0]);
             //mySong = new Song("All that she wants", "Ace of Base", "C:\\Users\\robin\\Documents\\Music\\16 All That She Wants.m4a");
             filePath = userProfile + @"\Documents\Music\16 All That She Wants.m4a";
             //mySong = new Song("All that she wants", "Ace of Base", filePath);
-            myPlayList.AddSong(Songs.AllSongs[1]);
-            myPlayList.AddSong(Songs.AllSongs[2]);
-            myPlayList2.AddSong(Songs.AllSongs[1]);
+            //myPlayList.AddSong(Songs.AllSongs[1]);
+            //myPlayList.AddSong(Songs.AllSongs[2]);
+            //myPlayList2.AddSong(Songs.AllSongs[1]);
             playlists.Add(myPlayList);
             playlists.Add(myPlayList2);
             //Player.AddTo_songList(mySong);

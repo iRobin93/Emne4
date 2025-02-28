@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using MediaPlayerApp.Data;
 using MediaPlayerApp.Model;
 using TagLib.Tiff.Pef;
 
@@ -16,6 +17,7 @@ namespace MediaPlayerApp
         public MainWindow()
         {
             InitializeComponent();
+            
             progressSlider.ValueChanged += ProgressSlider_ValueChanged;
             MainFrame.Navigate(_playerpage = new PlayerPage());
             
