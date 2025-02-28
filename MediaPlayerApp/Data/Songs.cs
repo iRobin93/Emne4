@@ -18,10 +18,16 @@ namespace MediaPlayerApp.Data
         public static ObservableCollection<Song> AllSongs { get; private set; } = new ObservableCollection<Song>();
 
      
-        public async static void InitializeSongs()
+        public async static Task InitializeSongs()
         {
 
             await GetSongsFromDb();
+
+            GetFilesInFolder();
+        }
+
+        public static void GetFilesInFolder()
+        {
             string userProfile = Environment.GetEnvironmentVariable("USERPROFILE");
             // Check if the directory exists
             if (Directory.Exists(userProfile + "\\Documents\\Music"))
@@ -33,15 +39,21 @@ namespace MediaPlayerApp.Data
                 foreach (var file in files)
                 {
                     // Create a FileInfo object for each file
-                    
+
                     string extension = Path.GetExtension(file).ToLower();
-                    
-                    
+
+
                     if (extension == ".mp3" || extension == ".m4a") // add more formats as needed
                     {
                         FileInfo fileInfo = new FileInfo(file);
-                        var tagFile = TagLib.File.Create(fileInfo.FullName);
-                        Song song = new Song(tagFile.Tag.Title, tagFile.Tag.FirstPerformer, fileInfo.FullName);
+                        
+                        if(AllSongs.FirstOrDefault(song => song.FilePath.Contains(fileInfo.FullName)) == null)
+                        {
+                            var tagFile = TagLib.File.Create(fileInfo.FullName);
+                            Song song = new Song(tagFile.Tag.Title, tagFile.Tag.FirstPerformer, fileInfo.FullName, false);
+                        }
+                            
+                     
                     }
                 }
             }
@@ -62,8 +74,8 @@ namespace MediaPlayerApp.Data
                 string jsonResponse = await response.Content.ReadAsStringAsync();
 
                 // Deserialize the JSON response into a list of Song objects using Newtonsoft.Json
-                AllSongs = (ObservableCollection<Song>)JsonConvert.DeserializeObject<IEnumerable<Song>>(jsonResponse);
-
+                AllSongs = new ObservableCollection<Song>(JsonConvert.DeserializeObject<IEnumerable<Song>>(jsonResponse));
+                
             }
             else
             {

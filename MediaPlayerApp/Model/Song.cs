@@ -38,14 +38,14 @@ namespace MediaPlayerApp.Model
             }
         }
 
-        public Song(string title, string artist, string filepath)
+        public Song(string title, string artist, string filepath, bool CreateInDb)
         {
             Id = _nextSongId++;
             Artist = artist;
             Title = title;
             FilePath = filepath;
-
-            CreateSongAsync(this);
+            if(CreateInDb)
+                CreateSongAsync(this);
             Songs.AddSong(this);
 
         }

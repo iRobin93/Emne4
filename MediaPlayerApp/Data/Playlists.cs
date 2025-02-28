@@ -2,37 +2,48 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using MediaPlayerApp.Model;
+using Newtonsoft.Json;
 
 namespace MediaPlayerApp.Data
 {
     static public class Playlists
     {
         public static ObservableCollection<Playlist> playlists = new ObservableCollection<Playlist>();
-        static Playlists()
-        {
-            var myPlayList2 = new Playlist( "MyList2");
-            var myPlayList = new Playlist( "MyPlayList");
-            string userProfile = Environment.GetEnvironmentVariable("USERPROFILE");
-            string filePath = userProfile + @"\Documents\Music\spotidownloader.com - Yellow - Coldplay.mp3";
-            //var mySong = new Song("Yellow", "ColdPlay", filePath);
-            //var mySong = new Song("Yellow", "ColdPlay", "C:\\Users\\robin\\Documents\\Music\\spotidownloader.com - Yellow - Coldplay.mp3");
-            //myPlayList.AddSong(Songs.AllSongs[0]);
-            //mySong = new Song("All that she wants", "Ace of Base", "C:\\Users\\robin\\Documents\\Music\\16 All That She Wants.m4a");
-            filePath = userProfile + @"\Documents\Music\16 All That She Wants.m4a";
-            //mySong = new Song("All that she wants", "Ace of Base", filePath);
-            //myPlayList.AddSong(Songs.AllSongs[1]);
-            //myPlayList.AddSong(Songs.AllSongs[2]);
-            //myPlayList2.AddSong(Songs.AllSongs[1]);
-            playlists.Add(myPlayList);
-            playlists.Add(myPlayList2);
-            //Player.AddTo_songList(mySong);
-        }
+
+ 
         public static void AddPlaylist(Playlist playlist)
         {
             playlists.Add(playlist);
+        }
+
+        public async static Task InitializePlaylists()
+        {
+            await GetPlaylistsFromDatabase();
+        }
+
+        public static async Task GetPlaylistsFromDatabase()
+        {
+            // Make a GET request to the API endpoint
+            HttpResponseMessage response = await CommonModel.client.GetAsync("https://localhost:7034/api/Playlists");
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Read the response content as a string
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+
+                // Deserialize the JSON response into a list of Song objects using Newtonsoft.Json
+                playlists = new ObservableCollection<Playlist>(JsonConvert.DeserializeObject<IEnumerable<Playlist>>(jsonResponse));
+
+            }
+            else
+            {
+                // Handle the error if the request is not successful
+                throw new Exception("Error retrieving playlists from API");
+            }
         }
 
         public static void DeleteSongFromAllPlaylists(Song song)

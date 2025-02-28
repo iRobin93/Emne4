@@ -58,8 +58,8 @@ namespace MediaPlayerApp.Pages
             if (addSong)
             {
                 if (_selectedPlaylist != null)
-                    _selectedPlaylist.AddSong(new Song(SongName.Text, ArtistName.Text, FilePath));
-                else new Song(SongName.Text, ArtistName.Text, FilePath);
+                    _selectedPlaylist.AddSong(new Song(SongName.Text, ArtistName.Text, FilePath, true));
+                else new Song(SongName.Text, ArtistName.Text, FilePath, true);
             }
         foundSong:
             _mainFrame.GoBack();

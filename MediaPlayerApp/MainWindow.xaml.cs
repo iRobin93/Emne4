@@ -16,12 +16,19 @@ namespace MediaPlayerApp
         private PlayerPage _playerpage;
         public MainWindow()
         {
+            InitalizeSongsAndPlaylists();
             InitializeComponent();
             
             progressSlider.ValueChanged += ProgressSlider_ValueChanged;
             MainFrame.Navigate(_playerpage = new PlayerPage());
             
         }
+        public async void InitalizeSongsAndPlaylists()
+        {
+            await Songs.InitializeSongs();
+            await Playlists.InitializePlaylists();
+        }
+
         //Test
         public void SetSongInfo(TagLib.File tagfile)
         {

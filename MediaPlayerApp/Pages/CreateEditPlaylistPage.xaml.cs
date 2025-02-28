@@ -34,7 +34,7 @@ namespace MediaPlayerApp.Pages
         {
             // Get the text entered in the input field
             string input = inputTextBox.Text;
-            Playlist playlist = new Playlist(input);
+            Playlist playlist = new Playlist(input, true);
             Playlists.AddPlaylist(playlist);
 
         }
