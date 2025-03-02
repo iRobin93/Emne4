@@ -29,6 +29,7 @@ namespace MediaPlayerApp.Windows
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             // Cast the sender as Playlist
+            
             ChosenPlaylist = (MediaPlayerApp.Model.Playlist)((TextBlock)sender).DataContext;
             this.DialogResult = true;
             this.Close();

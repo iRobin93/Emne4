@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MediaPlayerApp.Data;
 using MediaPlayerApp.Model;
+using Newtonsoft.Json;
 
 namespace MediaPlayerApp.Pages
 {
@@ -40,16 +42,18 @@ namespace MediaPlayerApp.Pages
             _selectedPlaylist = selectedPlaylist;
         }
 
-        private void SaveSong(object sender, RoutedEventArgs e)
+        private async void SaveSong(object sender, RoutedEventArgs e)
         {
             bool addSong = true;
                 foreach (Song song in (ObservableCollection<Song>) Songs.AllSongs)
                     if (FilePath == song.FilePath)
                     {
                         addSong = false;
-                    if (_selectedPlaylist != null)
-                    {
-                        _selectedPlaylist.AddSong(song);
+                        if (_selectedPlaylist != null)
+                        {
+                            
+                            await CommonModel.AddSongToPlaylistInDb(song, _selectedPlaylist, _selectedPlaylist.Songs.Count);
+                            _selectedPlaylist.AddSong(song);
                     }
                         
                         goto foundSong;
@@ -58,8 +62,14 @@ namespace MediaPlayerApp.Pages
             if (addSong)
             {
                 if (_selectedPlaylist != null)
-                    _selectedPlaylist.AddSong(new Song(SongName.Text, ArtistName.Text, FilePath, true));
-                else new Song(SongName.Text, ArtistName.Text, FilePath, true);
+                {
+                    var song = new Song(SongName.Text, ArtistName.Text, FilePath, true, 0);
+                    
+                    await CommonModel.AddSongToPlaylistInDb(song, _selectedPlaylist, _selectedPlaylist.Songs.Count);
+                    _selectedPlaylist.AddSong(song);
+                }
+                    
+                else new Song(SongName.Text, ArtistName.Text, FilePath, true, 0);
             }
         foundSong:
             _mainFrame.GoBack();

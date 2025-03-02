@@ -43,6 +43,8 @@ namespace MediaPlayerApp.Pages
             bool? result = modal.ShowDialog();
             if (result == true)
             {
+
+                CommonModel.AddSongToPlaylistInDb(selectedSong, modal.ChosenPlaylist, modal.ChosenPlaylist.Songs.Count);
                 modal.ChosenPlaylist.AddSong(selectedSong);
             }
         }

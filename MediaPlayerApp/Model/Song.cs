@@ -21,7 +21,7 @@ namespace MediaPlayerApp.Model
         private static int _nextSongId = 1;
         public event PropertyChangedEventHandler PropertyChanged;
         
-        private int Id { get; set; }
+        public int Id { get; private set; }
         public string Artist { get; private set; }
         private string Title { get; set; }
         public string FilePath { get; private set; }
@@ -38,9 +38,9 @@ namespace MediaPlayerApp.Model
             }
         }
 
-        public Song(string title, string artist, string filepath, bool CreateInDb)
+        public Song(string title, string artist, string filepath, bool CreateInDb, int id)
         {
-            Id = _nextSongId++;
+            Id = id;
             Artist = artist;
             Title = title;
             FilePath = filepath;

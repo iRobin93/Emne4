@@ -34,25 +34,13 @@ namespace MediaPlayerApp
 
         private void MyListBox_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ListBoxItem listBoxItem = GetListBoxItemFromMouseEvent(e);
-            if (listBoxItem != null)
-            {
+
                 // Handle the click event here (e.g., play the song, show details, etc.)
-                Player.PlaySong((int)listBoxItem.Tag);
-                
-            }
+                Player.PlaySong((int)myListBox.SelectedIndex);
+
         }
 
-        private ListBoxItem GetListBoxItemFromMouseEvent(MouseButtonEventArgs e)
-        {
-            DependencyObject depObj = e.OriginalSource as DependencyObject;
-            while (depObj != null && !(depObj is ListBoxItem))
-            {
-                depObj = VisualTreeHelper.GetParent(depObj);
-            }
-            return depObj as ListBoxItem;
-        }
-
+        
         public void UpdateImageSource(BitmapImage image)
         {
             songImage.Source = image;
@@ -62,7 +50,7 @@ namespace MediaPlayerApp
         private void MyListBox_Loaded(object sender, RoutedEventArgs e)
         {
             // Initially set the Tag values for each ListBoxItem
-            UpdateItemTags();
+           // UpdateItemTags();
         }
 
         // Call this method when you want to refresh the ListBox items

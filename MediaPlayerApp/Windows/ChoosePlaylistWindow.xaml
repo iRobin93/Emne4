@@ -15,7 +15,7 @@
                         <DataTemplate>
                             <WrapPanel>
                                 <!-- Display Playlist Name -->
-                                <TextBlock MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Text="{Binding Name}" FontWeight="Bold" />
+                                <TextBlock Cursor="Hand" Width="300" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Text="{Binding Name}" FontWeight="Bold" />
                             </WrapPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaPlayerBackend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250228123756_v2")]
-    partial class v2
+    [Migration("20250302132704_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,6 +41,27 @@ namespace MediaPlayerBackend.Migrations
                     b.ToTable("Playlists");
                 });
 
+            modelBuilder.Entity("MediaPlayerBackend.Model.PlaylistSong", b =>
+                {
+                    b.Property<int>("PlaylistId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SongId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.HasKey("PlaylistId", "SongId", "Id");
+
+                    b.HasIndex("SongId");
+
+                    b.ToTable("PlaylistSongs");
+                });
+
             modelBuilder.Entity("MediaPlayerBackend.Model.Song", b =>
                 {
                     b.Property<int>("Id")
@@ -66,34 +87,23 @@ namespace MediaPlayerBackend.Migrations
                     b.ToTable("Songs");
                 });
 
-            modelBuilder.Entity("PlaylistSongs", b =>
+            modelBuilder.Entity("MediaPlayerBackend.Model.PlaylistSong", b =>
                 {
-                    b.Property<int>("PlaylistId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SongId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PlaylistId", "SongId");
-
-                    b.HasIndex("SongId");
-
-                    b.ToTable("PlaylistSongs");
-                });
-
-            modelBuilder.Entity("PlaylistSongs", b =>
-                {
-                    b.HasOne("MediaPlayerBackend.Model.Playlist", null)
+                    b.HasOne("MediaPlayerBackend.Model.Playlist", "Playlist")
                         .WithMany()
                         .HasForeignKey("PlaylistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MediaPlayerBackend.Model.Song", null)
+                    b.HasOne("MediaPlayerBackend.Model.Song", "Song")
                         .WithMany()
                         .HasForeignKey("SongId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Playlist");
+
+                    b.Navigation("Song");
                 });
 #pragma warning restore 612, 618
         }

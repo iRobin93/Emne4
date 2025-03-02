@@ -89,8 +89,12 @@ namespace MediaPlayerApp
 
         private void MenuItem_Delete(object sender, RoutedEventArgs e)
         {
-
+            var menuItem = sender as MenuItem;
+            // Get the DataContext from the MenuItem (the current item in the Grid)
+            var SelectedPlaylist = menuItem?.CommandParameter as MediaPlayerApp.Model.Playlist;
+            
         }
+
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             _mainFrame.Navigate(new CreateEditPlaylistPage(_mainFrame));

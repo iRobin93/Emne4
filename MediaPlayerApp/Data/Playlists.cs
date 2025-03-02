@@ -36,7 +36,23 @@ namespace MediaPlayerApp.Data
                 string jsonResponse = await response.Content.ReadAsStringAsync();
 
                 // Deserialize the JSON response into a list of Song objects using Newtonsoft.Json
-                playlists = new ObservableCollection<Playlist>(JsonConvert.DeserializeObject<IEnumerable<Playlist>>(jsonResponse));
+                // playlists = new ObservableCollection<Playlist>(JsonConvert.DeserializeObject<IEnumerable<Playlist>>(jsonResponse));
+                var playlistswithsongs = JsonConvert.DeserializeObject<IEnumerable<PlaylistWithSongIds>>(jsonResponse);
+                foreach (var playlistWithSongs in playlistswithsongs)
+                {
+                    var playlist = playlistWithSongs.Playlist;
+                    var songIds = playlistWithSongs.SongIds;
+                    foreach (var songId in songIds)
+                    {
+                        Song song = Songs.AllSongs.FirstOrDefault(s => s.Id == songId);
+                        playlist.AddSong(song);
+                    }
+
+                    AddPlaylist(playlist);
+
+
+                }
+
 
             }
             else

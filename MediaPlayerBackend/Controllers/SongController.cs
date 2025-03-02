@@ -28,4 +28,15 @@ public class SongsController : ControllerBase
         await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetSongs), new { id = song.Id }, song);
     }
+
+
+    // DELETE: api/Songs
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteSong(int id)
+    {
+        var song = await _context.Songs.FindAsync(id);
+        _context.Songs.Remove(song);
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
 }

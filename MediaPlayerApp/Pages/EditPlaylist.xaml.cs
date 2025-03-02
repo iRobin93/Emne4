@@ -79,7 +79,7 @@ namespace MediaPlayerApp
             var menuItem = sender as MenuItem;
             // Get the DataContext from the MenuItem (the current item in the Grid)
             var selectedSong = menuItem?.CommandParameter as MediaPlayerApp.Model.Song;
-            //Songs.DeleteSong(selectedSong);
+            _selectedPlaylist.DeleteSongFromPlaylist(myListBox.SelectedIndex);
         }
 
     }

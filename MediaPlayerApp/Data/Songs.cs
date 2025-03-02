@@ -50,7 +50,7 @@ namespace MediaPlayerApp.Data
                         if(AllSongs.FirstOrDefault(song => song.FilePath.Contains(fileInfo.FullName)) == null)
                         {
                             var tagFile = TagLib.File.Create(fileInfo.FullName);
-                            Song song = new Song(tagFile.Tag.Title, tagFile.Tag.FirstPerformer, fileInfo.FullName, false);
+                            Song song = new Song(tagFile.Tag.Title, tagFile.Tag.FirstPerformer, fileInfo.FullName, true, 0);
                         }
                             
                      
@@ -92,6 +92,7 @@ namespace MediaPlayerApp.Data
         public static void DeleteSong(Song song)
         {
             AllSongs.Remove(song);
+            CommonModel.DeleteSongFromDb(song);
             Playlists.DeleteSongFromAllPlaylists(song);
         }
 

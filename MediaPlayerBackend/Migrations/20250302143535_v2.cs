@@ -10,20 +10,20 @@ namespace MediaPlayerBackend.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "FilePath",
-                table: "Songs",
-                type: "nvarchar(max)",
+            migrationBuilder.AddColumn<int>(
+                name: "SortOrder",
+                table: "PlaylistSongs",
+                type: "int",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: 0);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "FilePath",
-                table: "Songs");
+                name: "SortOrder",
+                table: "PlaylistSongs");
         }
     }
 }
