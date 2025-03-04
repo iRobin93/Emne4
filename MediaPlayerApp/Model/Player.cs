@@ -34,6 +34,15 @@ namespace MediaPlayerApp.Model
             };
         }
 
+        public static void MoveSong(int fromIndex, int toIndex, Song song)
+        {
+            if (_currentlyPlayingIndex == fromIndex)
+                _currentlyPlayingIndex = toIndex;
+            else if (fromIndex < _currentlyPlayingIndex && toIndex >= _currentlyPlayingIndex)
+                _currentlyPlayingIndex--;
+            else if (fromIndex > _currentlyPlayingIndex && toIndex <= _currentlyPlayingIndex)
+                _currentlyPlayingIndex++;
+        }
 
         public static void SetPlayerPage(PlayerPage page)
         {

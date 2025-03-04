@@ -22,7 +22,11 @@
             <Border Height="240" Width="409" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="2" Padding="0" CornerRadius="5" Margin="0,5,0,0">
                 
                 <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                        <ListBox x:Name="myListBox" ItemsSource="{Binding Source={x:Static local:Player._songList}}">
+                        <ListBox x:Name="myListBox" ItemsSource="{Binding Source={x:Static local:Player._songList}}"
+                                AllowDrop="True" 
+                                PreviewMouseLeftButtonDown="ListBox_PreviewMouseLeftButtonDown"
+                                Drop="ListBox_Drop"
+                                DragOver="ListBox_DragOver">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                     <WrapPanel Cursor="Hand">
