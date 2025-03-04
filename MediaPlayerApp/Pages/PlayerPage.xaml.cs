@@ -47,7 +47,38 @@ namespace MediaPlayerApp
 
         public void NotMutedImage_Loaded(object sender, RoutedEventArgs e)
         {
-         
+            if (!(sender is Image img))
+                return;
+            var listBoxItem = FindAncestor<ListBoxItem>(img);
+            ListBox listBox = FindAncestor<ListBox>(listBoxItem);
+
+            // Access the data item in the ListBoxItem
+            var dataItem = listBoxItem.Content;
+
+            // Use the ItemContainerGenerator to find the correct index
+            var index = listBox.ItemContainerGenerator.IndexFromContainer(listBoxItem);
+
+            if (Player.SongIsPlaying(index))
+            {
+                // Set the image source using pack URI for embedded resource
+                Uri imageUri = new Uri("pack://application:,,,/Images/unmute.png", UriKind.Absolute);
+                img.Source = new BitmapImage(imageUri);
+            }
+
+        }
+
+        // Helper method to find the ancestor of a given type
+        private T FindAncestor<T>(DependencyObject current) where T : DependencyObject
+        {
+            while (current != null)
+            {
+                if (current is T)
+                {
+                    return (T)current;
+                }
+                current = VisualTreeHelper.GetParent(current);
+            }
+            return null;
         }
 
 
