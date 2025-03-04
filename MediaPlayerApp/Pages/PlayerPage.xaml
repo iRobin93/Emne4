@@ -8,10 +8,6 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PlayerPage">
 
-    <Page.Resources>
-        <!-- Add a value converter to handle visibility logic -->
-        <local:SongToVisibilityConverter x:Key="SongToVisibilityConverter" />
-    </Page.Resources>
 
     <Grid>
         <StackPanel Orientation="Horizontal">
@@ -33,13 +29,7 @@
                                         <!-- Display Playlist Name -->
                                         <TextBlock  Width="150" Text="{Binding title}" FontWeight="Bold" />
                                         <TextBlock Width="90" Text="{Binding Artist}"></TextBlock>
-                                        <Image Margin="25,0,0,0" Width="15" Source="/Images/unmute.png">
-                                            <Image.Visibility>
-                                                <MultiBinding Converter="{StaticResource SongToVisibilityConverter}">
-                                                    <Binding Path="DataContext" RelativeSource="{RelativeSource AncestorType=ListBoxItem}" />
-                                                    <Binding Path="Tag" RelativeSource="{RelativeSource AncestorType=ListBoxItem}" />
-                                                </MultiBinding>
-                                            </Image.Visibility>
+                                        <Image Margin="25,0,0,0" Width="15" Loaded="NotMutedImage_Loaded">
                                         </Image>
                                     </WrapPanel>
                                 </DataTemplate>
