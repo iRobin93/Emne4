@@ -34,7 +34,7 @@ namespace MediaPlayerApp.Model
             };
         }
 
-        public static void MoveSong(int fromIndex, int toIndex, Song song)
+        public static void MoveSong(int fromIndex, int toIndex)
         {
             if (_currentlyPlayingIndex == fromIndex)
                 _currentlyPlayingIndex = toIndex;
@@ -42,6 +42,10 @@ namespace MediaPlayerApp.Model
                 _currentlyPlayingIndex--;
             else if (fromIndex > _currentlyPlayingIndex && toIndex <= _currentlyPlayingIndex)
                 _currentlyPlayingIndex++;
+
+            var song = _songList[fromIndex];
+            _songList.RemoveAt(fromIndex);  // Remove the dragged item
+            _songList.Insert(toIndex, song);  // Insert the dragged item at the new position
         }
 
         public static void SetPlayerPage(PlayerPage page)

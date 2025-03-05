@@ -40,14 +40,12 @@ namespace MediaPlayerApp
             var listBoxItem = FindAncestor<ListBoxItem>((System.Windows.DependencyObject)e.OriginalSource);
             if (listBoxItem == null) return;
 
-            var song = listBox.ItemContainerGenerator.ItemFromContainer(listBoxItem) as Song;  // Assuming Song is your item type
-            if (song == null) return;
 
             // Get the index of the Song being dragged
             int index = listBox.ItemContainerGenerator.IndexFromContainer(listBoxItem);
 
             // Start the drag operation and pass the index along with the dragged Song
-            DragDrop.DoDragDrop(listBoxItem, new DataObject("SongWithIndex", new { Song = song, Index = index }), DragDropEffects.Move);
+            DragDrop.DoDragDrop(listBoxItem, new DataObject("SongWithIndex", index), DragDropEffects.Move);
         }
 
 
@@ -62,12 +60,8 @@ namespace MediaPlayerApp
             if (e.Data.GetDataPresent("SongWithIndex"))
             {
                 // Retrieve the dragged data (Song and Index)
-                var data = e.Data.GetData("SongWithIndex") as dynamic;
-                if (data == null) return;
-
-                Song draggedSong = data.Song;
-                int draggedIndex = data.Index;
-
+                int draggedIndex = e.Data.GetData("SongWithIndex") as dynamic;
+ 
                 ListBox listBox = sender as ListBox;
                 if (listBox == null) return;
 
@@ -87,17 +81,13 @@ namespace MediaPlayerApp
                     Song targetSong = targetItem.DataContext as Song;
                     if (targetSong == null) return;
 
-                    // Get the index of the target item
-                    int targetIndex = listBox.Items.IndexOf(targetSong);
+                    // Get the index of the Song being dropped at
+                    int targetIndex = listBox.ItemContainerGenerator.IndexFromContainer(hitItem);
 
                     // If the dragged item is not the same as the target item and they are not in the same position
                     if (draggedIndex != targetIndex)
                     {
-                        // Modify the underlying collection (list)
-                        var list = Player._songList;  // Your collection of Song items
-                        list.RemoveAt(draggedIndex);  // Remove the dragged item
-                        list.Insert(targetIndex, draggedSong);  // Insert the dragged item at the new position
-                        Player.MoveSong(draggedIndex, targetIndex, draggedSong);
+                        Player.MoveSong(draggedIndex, targetIndex);
                         // Refresh the ListBox
                         listBox.Items.Refresh();
                     }
