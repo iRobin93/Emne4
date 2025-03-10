@@ -33,6 +33,7 @@ namespace MediaPlayerApp
             myListBox.ItemsSource = selectedPlaylist.Songs;
             playlistName.Text = selectedPlaylist.Name;
             _selectedPlaylist = selectedPlaylist;
+
         }
 
         private void ChooseFileButton_Click(object sender, RoutedEventArgs e)
@@ -81,6 +82,69 @@ namespace MediaPlayerApp
             var selectedSong = menuItem?.CommandParameter as MediaPlayerApp.Model.Song;
             _selectedPlaylist.DeleteSongFromPlaylist(myListBox.SelectedIndex);
         }
+
+
+
+        // Handle PreviewMouseLeftButtonDown to start drag operation
+        private void ListBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ListBox listBox = sender as ListBox;
+            if (listBox == null) return;
+
+            var listBoxItem = CommonSongMethods.FindAncestor<ListBoxItem>((System.Windows.DependencyObject)e.OriginalSource);
+            if (listBoxItem == null) return;
+
+
+            // Get the index of the Song being dragged
+            int index = listBox.ItemContainerGenerator.IndexFromContainer(listBoxItem);
+
+            // Start the drag operation and pass the index along with the dragged Song
+            DragDrop.DoDragDrop(listBoxItem, new DataObject("SongWithIndex", index), DragDropEffects.Move);
+        }
+
+
+        // Handle DragOver event to allow dropping
+        private void ListBox_DragOver(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void ListBox_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("SongWithIndex"))
+            {
+                // Retrieve the dragged data (Song and Index)
+                int draggedIndex = e.Data.GetData("SongWithIndex") as dynamic;
+
+                ListBox listBox = sender as ListBox;
+                if (listBox == null) return;
+
+                // Get the target ListBoxItem that was hit by the drop
+                var position = e.GetPosition(listBox);
+                var hitItem = listBox.InputHitTest(position) as DependencyObject;
+
+                // Find the ListBoxItem that was dropped on
+                while (hitItem != null && !(hitItem is ListBoxItem))
+                {
+                    hitItem = VisualTreeHelper.GetParent(hitItem);
+                }
+
+                if (hitItem is ListBoxItem targetItem)
+                {
+                    // Get the index of the Song being dropped at
+                    int targetIndex = listBox.ItemContainerGenerator.IndexFromContainer(hitItem);
+
+                    // If the dragged item is not the same as the target item and they are not in the same position
+                    if (draggedIndex != targetIndex)
+                    {
+                        _selectedPlaylist.MoveSong(draggedIndex, targetIndex);
+                        // Refresh the ListBox
+                        listBox.Items.Refresh();
+                    }
+                }
+            }
+        }
+
 
     }
 }

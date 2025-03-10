@@ -7,6 +7,7 @@ using MediaPlayerApp.Model;
 using MediaPlayerApp.Windows;
 using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Media;
 
 namespace MediaPlayerApp.Pages
 {
@@ -57,5 +58,21 @@ namespace MediaPlayerApp.Pages
             var selectedSong = menuItem?.CommandParameter as MediaPlayerApp.Model.Song;
             Player.AddToNextInQueue(selectedSong);
         }
+
+        // Helper method to find the ancestor of a given type
+        public static T FindAncestor<T>(DependencyObject current) where T : DependencyObject
+        {
+            while (current != null)
+            {
+                if (current is T)
+                {
+                    return (T)current;
+                }
+                current = VisualTreeHelper.GetParent(current);
+            }
+            return null;
+        }
+
+
     }
 }

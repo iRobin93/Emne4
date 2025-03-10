@@ -57,7 +57,14 @@ namespace MediaPlayerApp.Model
         {
             var response = await CommonModel.client.DeleteAsync("https://localhost:7034/api/Playlists/" + Id.ToString() + "/delete-song/" + sortOrder.ToString());
         }
+
+        public void MoveSong(int fromIndex, int toIndex)
+        {
+
+            var song = Songs[fromIndex];
+            Songs.RemoveAt(fromIndex);  // Remove the dragged item
+            Songs.Insert(toIndex, song);  // Insert the dragged item at the new position
+        }
+
     }
-
-
 }

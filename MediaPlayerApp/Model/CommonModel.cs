@@ -22,5 +22,7 @@ namespace MediaPlayerApp.Model
             var response = await CommonModel.client.DeleteAsync("https://localhost:7034/api/Songs/" + song.Id.ToString());
             var responseContent = await response.Content.ReadAsStringAsync();
         }
+
+
     }
 }

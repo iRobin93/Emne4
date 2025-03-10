@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MediaPlayerApp.Data;
 using MediaPlayerApp.Model;
+using MediaPlayerApp.Pages;
 
 namespace MediaPlayerApp
 {
@@ -37,7 +38,7 @@ namespace MediaPlayerApp
             ListBox listBox = sender as ListBox;
             if (listBox == null) return;
 
-            var listBoxItem = FindAncestor<ListBoxItem>((System.Windows.DependencyObject)e.OriginalSource);
+            var listBoxItem = CommonSongMethods.FindAncestor<ListBoxItem>((System.Windows.DependencyObject)e.OriginalSource);
             if (listBoxItem == null) return;
 
 
@@ -77,10 +78,6 @@ namespace MediaPlayerApp
 
                 if (hitItem is ListBoxItem targetItem)
                 {
-                    // Get the target song (item being dropped on)
-                    Song targetSong = targetItem.DataContext as Song;
-                    if (targetSong == null) return;
-
                     // Get the index of the Song being dropped at
                     int targetIndex = listBox.ItemContainerGenerator.IndexFromContainer(hitItem);
 
@@ -113,8 +110,8 @@ namespace MediaPlayerApp
         {
             if (!(sender is Image img))
                 return;
-            var listBoxItem = FindAncestor<ListBoxItem>(img);
-            ListBox listBox = FindAncestor<ListBox>(listBoxItem);
+            var listBoxItem = CommonSongMethods.FindAncestor<ListBoxItem>(img);
+            ListBox listBox = CommonSongMethods.FindAncestor<ListBox>(listBoxItem);
 
             // Use the ItemContainerGenerator to find the correct index
             var index = listBox.ItemContainerGenerator.IndexFromContainer(listBoxItem);
@@ -128,19 +125,6 @@ namespace MediaPlayerApp
 
         }
 
-        // Helper method to find the ancestor of a given type
-        private T FindAncestor<T>(DependencyObject current) where T : DependencyObject
-        {
-            while (current != null)
-            {
-                if (current is T)
-                {
-                    return (T)current;
-                }
-                current = VisualTreeHelper.GetParent(current);
-            }
-            return null;
-        }
 
 
         // Call this method when you want to refresh the ListBox items
